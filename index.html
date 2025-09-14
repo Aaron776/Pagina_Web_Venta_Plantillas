@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebCraft Ecuador | Plantillas y Sitios Web Profesionales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== ESTILOS GENERALES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            color: #1e293b;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h2 span {
+            color: #4a6cf7;
+        }
+
+        p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        section {
+            padding: 6rem 5%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: #4a6cf7;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #3a5bd9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 108, 247, 0.3);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .logo span {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4a6cf7;
+            background: linear-gradient(90deg, #4a6cf7, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            margin-left: 2.5rem;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .nav-links li a:hover {
+            color: #4a6cf7;
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10rem 5% 6rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 span {
+            color: #4a6cf7;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .hero-image {
+            flex: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* ===== SERVICIOS SECTION ===== */
+        .services {
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #4a6cf7;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== PLANTILLAS SECTION ===== */
+        .templates {
+            background: #f8fafc;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .template-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .template-card h3 {
+            padding: 1.5rem 1.5rem 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .template-card p {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .template-card .btn {
+            margin: 0 1.5rem 1.5rem;
+            display: block;
+            text-align: center;
+        }
+
+        /* Botón Ver Más */
+        .see-more {
+            text-align: center;
+            margin: 4rem 0 2rem;
+        }
+
+        .btn-see-more {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #4a6cf7 0%, #8a2be2 100%);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-see-more i {
+            font-size: 1.3rem;
+        }
+
+        .btn-see-more:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(74, 108, 247, 0.4);
+        }
+
+        /* ===== PRECIOS SECTION ===== */
+        .pricing {
+            background: white;
+        }
+
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .price-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            position: relative;
+            text-align: center;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .price-card.popular {
+            border: 2px solid #4a6cf7;
+            transform: scale(1.05);
+        }
+
+        .price-card.popular::before {
+            content: "Más Popular";
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #4a6cf7;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .price-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-card .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4a6cf7;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .price-card ul li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.8rem;
+        }
+
+        .price-card ul li::before {
+            content: "✓";
+            color: #4a6cf7;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .price-card .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* ===== CONTACTO SECTION ===== */
+        .contact {
+            background: #f8fafc;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4a6cf7;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #1e293b;
+            color: white;
+        }
+
+        footer p {
+            color: #cbd5e1;
+        }
+
+        /* ===== BOTÓN WHATSAPP ===== */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* ===== ANIMACIONES ===== */
+        .animate-pop-in {
+            opacity: 0;
+            animation: popIn 0.8s forwards;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 8rem;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 3rem;
+            }
+
+            .hero-image {
+                margin-top: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .pricing-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .price-card.popular {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 4rem 5%;
+            }
+
+            .price-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <div class="logo">
+            <span>WebCraft Ecuador</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#plantillas">Plantillas</a></li>
+            <li><a href="#precios">Precios</a></li>
+        </ul>
+        <div class="burger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1 class="animate-pop-in">Diseño Web <span>Profesional</span></h1>
+            <p class="animate-pop-in">Plantillas premium y desarrollo web personalizado para impulsar tu presencia online con diseños modernos, responsive y listos para usar.</p>
+            <a href="#precios" class="btn animate-pop-in">Ver Precios</a>
+        </div>
+        <div class="hero-image animate-pop-in">
+            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Desarrollo Web Profesional">
+        </div>
+    </section>
+
+    <!-- Sección de Servicios -->
+    <section id="servicios" class="services">
+        <h2>Nuestros <span>Servicios</span></h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3>Plantillas Web</h3>
+                <p>Diseños modernos y profesionales listos para implementar en tu proyecto.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>Sitios Web Personalizados</h3>
+                <p>Desarrollo de sitios web a medida con funcionalidades específicas para tu negocio.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Diseño Responsive</h3>
+                <p>Tu sitio web se verá perfecto en cualquier dispositivo: móvil, tablet o desktop.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Plantillas -->
+    <section id="plantillas" class="templates">
+        <h2>Nuestras <span>Plantillas</span></h2>
+        <div class="template-grid">
+            <div class="template-card">
+                <img src="img/taller_mecanico.jpg" alt="Plantilla para Taller Mecánico">
+                <h3>Plantilla para Taller Mecánico</h3>
+                <p>Diseñada específicamente para talleres mecánicos y servicios de automoción. Incluye secciones para mostrar servicios, promociones, testimonios de clientes y formulario de contacto para solicitar citas.</p>
+                <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Taller%20Mecánico%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+            </div>
+            <div class="template-card">
+                <img src="img/psicologo.jpg" alt="Plantilla para Servicios Psicológicos">
+                <h3>Plantilla para Servicios Psicológicos</h3>
+                <p>Ideal para psicólogos y centros de terapia. Cuenta con diseño calmante, sección de especialidades, perfil profesional, testimonios y agenda de citas para facilitar que los pacientes soliciten consultas.</p>
+                <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20Psicológicos%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+            </div>
+            <div class="template-card">
+                <img src="img/coaching_profesional.jpg" alt="Plantilla para Coaching Profesional">
+                <h3>Plantilla para Coaching Profesional</h3>
+                <p>Perfecta para coaches profesionales y mentores. Incluye secciones para biografía, metodología de trabajo, programas de coaching, testimonios y calendario para reservar sesiones de asesoramiento.</p>
+                <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Coaching%20Profesional%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+            </div>
+        </div>
+
+        <!-- Botón "Ver más" centrado con icono -->
+        <div class="see-more">
+            <a href="plantillas.html" class="btn btn-see-more">
+                <i class="fas fa-plus-circle"></i> Ver más plantillas
+            </a>
+        </div>
+    </section>
+
+    <!-- Sección de Precios -->
+    <section id="precios" class="pricing">
+        <h2>Nuestros <span>Precios</span></h2>
+        <div class="pricing-cards">
+            <div class="price-card">
+                <h3>Plantilla Web</h3>
+                <p class="price">$35</p>
+                <ul>
+                    <li>Diseño moderno y responsive</li>
+                    <li>Personalización básica</li>
+                    <li>Optimización SEO</li>
+                    <li>Soporte por 30 días</li>
+                    <li>Documentación incluida</li>
+                </ul>
+                <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20de%20Plantilla%20Web%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Contratar</a>
+            </div>
+            <div class="price-card popular">
+                <h3>Sitio Web Personalizado</h3>
+                <p class="price">$80</p>
+                <ul>
+                    <li>Diseño 100% personalizado</li>
+                    <li>Hasta 5 secciones/páginas</li>
+                    <li>Formulario de contacto</li>
+                    <li>Soporte por 60 días</li>
+                    <li>Dominio y hosting (1 año)</li>
+                    <li>Documentación incluida</li>
+                </ul>
+                <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20de%20Sitio%20Web%20Personalizado%20($80).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Contratar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <script>
+                document.write(new Date().getFullYear())
+            </script> WebCraft Ecuador. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20tus%20servicios%20web.%20¿Podrías%20darme%20más%20información?" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // JavaScript para el menú responsive
+        document.querySelector('.burger').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Animación al hacer scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = '#fff';
+                navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = '#fff';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Más Plantillas | WebCraft Ecuador</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== ESTILOS GENERALES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            color: #1e293b;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h2 span {
+            color: #4a6cf7;
+        }
+
+        p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        section {
+            padding: 6rem 5%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: #4a6cf7;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #3a5bd9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 108, 247, 0.3);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .logo span {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4a6cf7;
+            background: linear-gradient(90deg, #4a6cf7, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            margin-left: 2.5rem;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .nav-links li a:hover {
+            color: #4a6cf7;
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* ===== PLANTILLAS SECTION ===== */
+        .more-templates {
+            padding-top: 10rem;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .template-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .template-card h3 {
+            padding: 1.5rem 1.5rem 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .template-card p {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .template-card .btn {
+            margin: 0 1.5rem 1.5rem;
+            display: block;
+            text-align: center;
+        }
+
+        /* === BOTÓN VOLVER === */
+        .back-button {
+            text-align: center;
+            margin: 4rem 0 2rem;
+        }
+
+        .btn-back {
+            background: #f8fafc;
+            color: #4a6cf7;
+            border: 2px solid #4a6cf7;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+        }
+
+        .btn-back:hover {
+            background: #4a6cf7;
+            color: white;
+        }
+
+        /* === EFECTOS COMPARTIDOS === */
+        .btn-back {
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #1e293b;
+            color: white;
+        }
+
+        footer p {
+            color: #cbd5e1;
+        }
+
+        /* ===== BOTÓN WHATSAPP ===== */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 4rem 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <div class="logo">
+            <span>WebCraft Ecuador</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html#inicio">Inicio</a></li>
+            <li><a href="index.html#servicios">Servicios</a></li>
+            <li><a href="index.html#plantillas">Plantillas</a></li>
+            <li><a href="index.html#precios">Precios</a></li>
+        </ul>
+        <div class="burger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <section class="more-templates">
+        <div class="container">
+            <h2>Explora todas nuestras <span>plantillas</span></h2>
+
+            <div class="template-grid">
+                <div class="template-card">
+                    <img src="img/Centro_Estetica.jpg" alt="Plantilla Centro de Estética">
+                    <h3>Plantilla Centro de Estética</h3>
+                    <p>Diseñada para centros de estética y belleza, incluye secciones para servicios, promociones, galería de trabajos, testimonios y formulario de reserva de citas.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Centro%20de%20Estética%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/clinica_odontologica.jpg" alt="Plantilla Clínica Odontológica">
+                    <h3>Plantilla Clínica Odontológica</h3>
+                    <p>Ideal para clínicas dentales y odontólogos independientes. Incluye secciones para servicios odontológicos, equipo profesional, antes/después, y agenda de citas online.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Clínica%20Odontológica%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/contador_profesional.jpg" alt="Plantilla Contador Profesional">
+                    <h3>Plantilla Contador Profesional</h3>
+                    <p>Diseñada para contadores y firmas de accounting. Incluye secciones para servicios contables, asesorías fiscales, testimonios de clientes y formulario de contacto profesional.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Contador%20Profesional%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/docente_particular.jpg" alt="Plantilla Docente Particular">
+                    <h3>Plantilla Docente Particular</h3>
+                    <p>Perfecta para profesores y tutores independientes. Incluye secciones para materias que enseña, metodología, horarios disponibles, testimonios y contacto para clases.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Docente%20Particular%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/entrenador_personal.jpg" alt="Plantilla Entrenador Personal">
+                    <h3>Plantilla Entrenador Personal</h3>
+                    <p>Ideal para entrenadores personales y preparadores físicos. Incluye secciones para programas de entrenamiento, testimonios de clientes, galería de resultados y planificación de sesiones.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Entrenador%20Personal%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/fisioterapia.jpg" alt="Plantilla Servicios de Fisioterapia">
+                    <h3>Plantilla Servicios de Fisioterapia</h3>
+                    <p>Diseñada para fisioterapeutas y centros de rehabilitación. Incluye secciones para tratamientos especializados, equipo profesional, testimonios y agendamiento de citas terapéuticas.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20de%20Fisioterapia%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+                
+                <div class="template-card">
+                    <img src="img/mudanzas.JPG" alt="Plantilla Servicio de Mudanzas">
+                    <h3>Plantilla Servicio de Mudanzas</h3>
+                    <p>Perfecta para empresas de mudanzas y transporte de carga. Incluye secciones para servicios ofrecidos, cobertura geográfica, calculadora de costos y formulario de cotizaciones.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Mudanzas%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/negocio_tatuajes.jpg" alt="Plantilla Negocio de Tatuajes">
+                    <h3>Plantilla Negocio de Tatuajes</h3>
+                    <p>Ideal para estudios de tatuaje y artistas del tatuaje. Incluye galería de trabajos, estilos especializados, proceso de trabajo, cuidados posteriores y agendamiento de citas.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Negocio%20de%20Tatuajes%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/nutricionista.jpg" alt="Plantilla Servicio de Nutricionista">
+                    <h3>Plantilla Servicio de Nutricionista</h3>
+                    <p>Diseñada para nutricionistas y dietistas. Incluye secciones para planes nutricionales, especialidades, testimonios de pacientes, blog de alimentación saludable y agendamiento de consultas.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Nutricionista%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+                
+                <div class="template-card">
+                    <img src="img/peluqueria.jpg" alt="Plantilla Peluquería">
+                    <h3>Plantilla Peluquería</h3>
+                    <p>Perfecta para peluquerías y salones de belleza. Incluye secciones para servicios de corte, coloración, tratamientos, promociones, portfolio de trabajos y reserva de citas online.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Peluquería%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/psiquiatria.jpg" alt="Plantilla Servicios Psiquiátricos">
+                    <h3>Plantilla Servicios Psiquiátricos</h3>
+                    <p>Diseñada para psiquiatras y centros de salud mental. Incluye secciones para especialidades, enfoque de tratamiento, equipo profesional, testimonios y agendamiento de consultas confidenciales.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20Psiquiátricos%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/servicios_limpieza.jpg" alt="Plantilla Servicio de Limpieza">
+                    <h3>Plantilla Servicio de Limpieza</h3>
+                    <p>Ideal para empresas de limpieza y mantenimiento. Incluye secciones para servicios residenciales y comerciales, métodos de trabajo, productos utilizados y formulario de solicitud de presupuestos.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Limpieza%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+                
+                <div class="template-card">
+                    <img src="img/spa.JPG" alt="Plantilla SPA">
+                    <h3>Plantilla SPA</h3>
+                    <p>Diseñada para centros de spa y bienestar. Incluye secciones para tratamientos relajantes, terapias, paquetes promocionales, galería de instalaciones y reserva de servicios online.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20SPA%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+
+                <div class="template-card">
+                    <img src="img/terapia_ocupacional.jpg" alt="Plantilla Servicios de Terapia Ocupacional">
+                    <h3>Plantilla Servicios de Terapia Ocupacional</h3>
+                    <p>Perfecta para terapeutas ocupacionales y centros de rehabilitación. Incluye secciones para áreas de intervención, metodología de trabajo, testimonios y agendamiento de evaluaciones.</p>
+                    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20de%20Terapia%20Ocupacional%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                </div>
+            </div>
+
+            <!-- Botón de regreso -->
+            <div class="back-button">
+                <a href="index.html" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <script>
+                document.write(new Date().getFullYear())
+            </script> WebCraft Ecuador. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/593984588833?text=Hola,%20estoy%20interesado%20en%20tus%20plantillas%20web.%20¿Podrías%20darme%20más%20información?" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // JavaScript para el menú responsive
+        document.querySelector('.burger').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Animación al hacer scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = '#fff';
+                navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = '#fff';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
