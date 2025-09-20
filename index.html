@@ -470,6 +470,30 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0;
+                text-align: center;
+            }
+
+            .nav-links li a {
+                margin: 0;
+                padding: 1rem;
+                display: block;
+                width: 100%;
             }
 
             .burger {
@@ -642,7 +666,31 @@
     <script>
         // JavaScript para el menú responsive
         document.querySelector('.burger').addEventListener('click', () => {
-            document.querySelector('.nav-links').classList.toggle('active');
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+            
+            // Cambiar ícono entre menú y X
+            const burgerIcon = document.querySelector('.burger i');
+            if (navLinks.classList.contains('active')) {
+                burgerIcon.classList.remove('fa-bars');
+                burgerIcon.classList.add('fa-times');
+            } else {
+                burgerIcon.classList.remove('fa-times');
+                burgerIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Cerrar menú al hacer clic en un enlace (en móviles)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.querySelector('.nav-links');
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    const burgerIcon = document.querySelector('.burger i');
+                    burgerIcon.classList.remove('fa-times');
+                    burgerIcon.classList.add('fa-bars');
+                }
+            });
         });
 
         // Animación al hacer scroll
