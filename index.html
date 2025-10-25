@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebCraft Ecuador | Plantillas y Sitios Web Profesionales</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Anime.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
         /* ===== ESTILOS GENERALES ===== */
         * {
@@ -366,27 +368,137 @@
             background: #f8fafc;
         }
 
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-info {
             background: white;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: #f8fafc;
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4a6cf7, #8a2be2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            color: #111827;
+            font-size: 0.9rem;
+        }
+
+        .contact-value {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+        .social-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .social-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4a6cf7, #8a2be2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 108, 247, 0.3);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-form h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 2rem;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
         }
 
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
         .form-group input,
         .form-group textarea {
             width: 100%;
             padding: 1rem;
-            border: 1px solid #e2e8f0;
+            border: 2px solid #e5e7eb;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border 0.3s;
+            transition: border-color 0.3s ease;
         }
 
         .form-group input:focus,
@@ -397,7 +509,14 @@
 
         .form-group textarea {
             resize: vertical;
-            min-height: 150px;
+            min-height: 120px;
+        }
+
+        .btn-full {
+            width: 100%;
+            text-align: center;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
         }
 
         /* ===== FOOTER ===== */
@@ -468,6 +587,18 @@
             }
         }
 
+        /* Elementos para animaciones con anime.js */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
             .hero {
@@ -483,6 +614,11 @@
 
             .hero-image {
                 margin-top: 2rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
 
@@ -535,6 +671,17 @@
             .price-card.popular {
                 transform: scale(1);
             }
+
+            .contact-info,
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -544,6 +691,11 @@
 
             .price-card {
                 max-width: 100%;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -560,6 +712,7 @@
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#plantillas">Plantillas</a></li>
             <li><a href="#precios">Precios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
         </ul>
         <div class="burger">
             <i class="fas fa-bars"></i>
@@ -584,21 +737,21 @@
     <section id="servicios" class="services">
         <h2>Nuestros <span>Servicios</span></h2>
         <div class="services-grid">
-            <div class="service-card">
+            <div class="service-card animate-on-scroll">
                 <div class="service-icon">
                     <i class="fas fa-paint-brush"></i>
                 </div>
                 <h3>Plantillas Web</h3>
                 <p>Diseños modernos y profesionales listos para implementar en tu proyecto.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card animate-on-scroll">
                 <div class="service-icon">
                     <i class="fas fa-laptop-code"></i>
                 </div>
                 <h3>Sitios Web Personalizados</h3>
                 <p>Desarrollo de sitios web a medida con funcionalidades específicas para tu negocio.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card animate-on-scroll">
                 <div class="service-icon">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
@@ -612,7 +765,7 @@
     <section id="plantillas" class="templates">
         <h2>Nuestras <span>Plantillas</span></h2>
         <div class="template-grid">
-            <div class="template-card">
+            <div class="template-card animate-on-scroll">
                 <img src="img/taller_mecanico.jpg" alt="Plantilla para Taller Mecánico">
                 <h3>Plantilla para Taller Mecánico</h3>
                 <p>Diseñada específicamente para talleres mecánicos y servicios de automoción. Incluye secciones para
@@ -621,7 +774,7 @@
                 <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Taller%20Mecánico%20($35).%20¿Podrías%20darme%20más%20información?"
                     class="btn" target="_blank">Comprar ($35)</a>
             </div>
-            <div class="template-card">
+            <div class="template-card animate-on-scroll">
                 <img src="img/psicologo.jpg" alt="Plantilla para Servicios Psicológicos">
                 <h3>Plantilla para Servicios Psicológicos</h3>
                 <p>Ideal para psicólogos y centros de terapia. Cuenta con diseño calmante, sección de especialidades,
@@ -630,7 +783,7 @@
                 <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20Psicológicos%20($35).%20¿Podrías%20darme%20más%20información?"
                     class="btn" target="_blank">Comprar ($35)</a>
             </div>
-            <div class="template-card">
+            <div class="template-card animate-on-scroll">
                 <img src="img/coaching_profesional.jpg" alt="Plantilla para Coaching Profesional">
                 <h3>Plantilla para Coaching Profesional</h3>
                 <p>Perfecta para coaches profesionales y mentores. Incluye secciones para biografía, metodología de
@@ -643,7 +796,7 @@
 
         <!-- Botón "Ver más" centrado con icono -->
         <div class="see-more">
-            <a href="plantillas.html" class="btn btn-see-more">
+            <a href="plantillas.html" class="btn btn-see-more animate-on-scroll">
                 <i class="fas fa-plus-circle"></i> Ver más plantillas
             </a>
         </div>
@@ -653,7 +806,7 @@
     <section id="precios" class="pricing">
         <h2>Nuestros <span>Precios</span></h2>
         <div class="pricing-cards">
-            <div class="price-card">
+            <div class="price-card animate-on-scroll">
                 <h3>Plantilla Web</h3>
                 <p class="price">$35</p>
                 <ul>
@@ -666,7 +819,7 @@
                 <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20el%20paquete%20de%20Plantilla%20Web%20($35).%20¿Podrías%20darme%20más%20información?"
                     class="btn" target="_blank">Contratar</a>
             </div>
-            <div class="price-card popular">
+            <div class="price-card popular animate-on-scroll">
                 <h3>Sitio Web Personalizado</h3>
                 <p class="price">$80</p>
                 <ul>
@@ -683,7 +836,87 @@
         </div>
     </section>
 
-    </div>
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="contact">
+        <h2>Contácta<span>nos</span></h2>
+        <p class="section-subtitle" style="text-align: center; max-width: 600px; margin: 0 auto 2rem;">¿Tienes un
+            proyecto en mente? ¡Hablemos!</p>
+
+        <div class="contact-content">
+            <!-- Información de contacto -->
+            <div class="contact-info animate-on-scroll">
+                <h3>Información de Contacto</h3>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">aronortiz90@yahoo.com</div>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-details">
+                        <div class="contact-label">WhatsApp</div>
+                        <div class="contact-value">+593 96 212 9090</div>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-details">
+                        <div class="contact-label">Ubicación</div>
+                        <div class="contact-value">Quito, Ecuador</div>
+                    </div>
+                </div>
+
+                <div class="social-section">
+                    <h3 class="social-title">Síguenos</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de contacto -->
+            <div class="contact-form animate-on-scroll">
+                <h3>Envíanos un Mensaje</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nombre completo *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Asunto *</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Mensaje *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span>📨</span> Enviar Mensaje
+                    </button>
+                </form>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -700,7 +933,7 @@
         class="whatsapp-btn" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         // JavaScript para el menú responsive
         document.querySelector('.burger').addEventListener('click', () => {
@@ -742,7 +975,249 @@
                 navbar.style.boxShadow = 'none';
             }
         });
+
+        // Animaciones con Anime.js
+        document.addEventListener('DOMContentLoaded', function () {
+            // Animación inicial del hero
+            anime({
+                targets: '.hero-content h1',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 1000,
+                easing: 'easeOutCubic',
+                delay: 300
+            });
+
+            anime({
+                targets: '.hero-content p',
+                translateY: [30, 0],
+                opacity: [0, 1],
+                duration: 1000,
+                easing: 'easeOutCubic',
+                delay: 500
+            });
+
+            anime({
+                targets: '.hero-content .btn',
+                translateY: [30, 0],
+                opacity: [0, 1],
+                duration: 1000,
+                easing: 'easeOutCubic',
+                delay: 700
+            });
+
+            anime({
+                targets: '.hero-image',
+                translateX: [50, 0],
+                opacity: [0, 1],
+                duration: 1000,
+                easing: 'easeOutCubic',
+                delay: 400
+            });
+
+            // Animaciones al hacer scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+
+                        if (element.classList.contains('animate-on-scroll')) {
+                            anime({
+                                targets: element,
+                                translateY: [50, 0],
+                                opacity: [0, 1],
+                                duration: 800,
+                                easing: 'easeOutCubic'
+                            });
+                            element.classList.add('animated');
+                        }
+
+                        if (element.classList.contains('service-card')) {
+                            anime({
+                                targets: element,
+                                translateY: [60, 0],
+                                scale: [0.9, 1],
+                                opacity: [0, 1],
+                                duration: 800,
+                                easing: 'easeOutBack',
+                                delay: anime.stagger(100)
+                            });
+                        }
+
+                        if (element.classList.contains('template-card')) {
+                            anime({
+                                targets: element,
+                                translateY: [80, 0],
+                                rotateY: [15, 0],
+                                opacity: [0, 1],
+                                duration: 1000,
+                                easing: 'easeOutCubic',
+                                delay: anime.stagger(150)
+                            });
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observar elementos para animaciones
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Animación de botones al hover
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('mouseenter', function () {
+                    anime({
+                        targets: this,
+                        scale: 1.05,
+                        duration: 200,
+                        easing: 'easeOutBack'
+                    });
+                });
+
+                button.addEventListener('mouseleave', function () {
+                    anime({
+                        targets: this,
+                        scale: 1,
+                        duration: 200,
+                        easing: 'easeOutBack'
+                    });
+                });
+            });
+
+            // Animación del formulario de contacto
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+
+                    // Animación de envío
+                    anime({
+                        targets: submitBtn,
+                        scale: 0.95,
+                        duration: 200,
+                        easing: 'easeOutCubic'
+                    });
+
+                    submitBtn.innerHTML = '<span>⏳</span> Enviando...';
+                    submitBtn.disabled = true;
+
+                    // Simular envío
+                    setTimeout(() => {
+                        anime({
+                            targets: submitBtn,
+                            scale: 1,
+                            duration: 200,
+                            easing: 'easeOutCubic'
+                        });
+
+                        submitBtn.innerHTML = '<span>✅</span> ¡Enviado!';
+
+                        // Mostrar mensaje de éxito
+                        const successMessage = document.createElement('div');
+                        successMessage.textContent = '¡Mensaje enviado con éxito! Te contactaremos pronto.';
+                        successMessage.style.cssText = `
+                            background: #10b981;
+                            color: white;
+                            padding: 1rem;
+                            border-radius: 0.5rem;
+                            margin-top: 1rem;
+                            text-align: center;
+                            opacity: 0;
+                        `;
+
+                        contactForm.appendChild(successMessage);
+
+                        anime({
+                            targets: successMessage,
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            duration: 500,
+                            easing: 'easeOutCubic'
+                        });
+
+                        // Resetear después de 3 segundos
+                        setTimeout(() => {
+                            contactForm.reset();
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+
+                            anime({
+                                targets: successMessage,
+                                opacity: [1, 0],
+                                translateY: [0, -20],
+                                duration: 500,
+                                easing: 'easeInCubic',
+                                complete: function () {
+                                    successMessage.remove();
+                                }
+                            });
+                        }, 3000);
+                    }, 2000);
+                });
+            }
+
+            // Animación de las tarjetas de servicios al hover
+            document.querySelectorAll('.service-card, .template-card, .price-card').forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    anime({
+                        targets: this,
+                        translateY: -10,
+                        duration: 300,
+                        easing: 'easeOutCubic'
+                    });
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    anime({
+                        targets: this,
+                        translateY: 0,
+                        duration: 300,
+                        easing: 'easeOutCubic'
+                    });
+                });
+            });
+        });
     </script>
+    <script>
+        (function () {
+            emailjs.init({
+                publicKey: "I0PxpVsiEYxWuyxLa"
+            });
+        })();
+    </script>
+    <script>
+        const form = document.getElementById('contactForm');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Cambiar botón mientras se envía
+            const btn = form.querySelector('button');
+            btn.innerText = "Enviando...";
+
+            // Usa tus IDs reales del servicio y la plantilla
+            emailjs.sendForm('service_00nnwa8', 'template_czxc31j', this)
+                .then(() => {
+                    alert('✅ Tu mensaje fue enviado con éxito.');
+                    form.reset();
+                    btn.innerText = "📨 Enviar Mensaje";
+                }, (error) => {
+                    alert('❌ Ocurrió un error al enviar el mensaje.');
+                    console.error('Error:', error);
+                    btn.innerText = "📨 Enviar Mensaje";
+                });
+        });
+    </script>
+
 </body>
 
 </html>
