@@ -1,693 +1,1795 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="no-js">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Más Plantillas | WebCraft Ecuador</title>
+    <title>Catálogo de plantillas web — WebCraft Ecuador</title>
+    <meta name="description"
+        content="Las 17 plantillas web de WebCraft Ecuador por rubro: salud, belleza, profesionales, hogar, educación, deporte y automotriz. Todas a $35 y listas para publicar.">
+    <meta name="theme-color" content="#060711">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Anime.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
-        /* ===== ESTILOS GENERALES ===== */
-        * {
-            margin: 0;
-            padding: 0;
+        /* ===== Tokens ===== */
+        :root {
+            --bg: #060711;
+            --bg-2: #0A0D1C;
+            --surface: rgba(255, 255, 255, .045);
+            --surface-2: rgba(255, 255, 255, .085);
+            --text: #EDF2FF;
+            --muted: #9AA5C4;
+            --faint: rgba(237, 242, 255, .45);
+            --cyan: #22E3FF;
+            --violet: #8B5CF6;
+            --magenta: #FF2E9A;
+            --lime: #C6FF3F;
+            --wa: #25D366;
+            --wa-deep: #1DBE5B;
+            --line: rgba(237, 242, 255, .1);
+            --line-strong: rgba(237, 242, 255, .22);
+            --r-card: 20px;
+            --r-ctrl: 14px;
+            --r-pill: 999px;
+            --shadow: 0 22px 50px -28px rgba(0, 0, 0, .8);
+            --shadow-lift: 0 34px 70px -30px rgba(0, 0, 0, .9);
+            --glow-cyan: 0 0 30px -8px rgba(34, 227, 255, .55);
+            --glow-violet: 0 0 38px -10px rgba(139, 92, 246, .6);
+            --glow-magenta: 0 0 30px -8px rgba(255, 46, 154, .55);
+            --ease: cubic-bezier(.22, 1, .36, 1);
+            --grad: linear-gradient(100deg, #22E3FF, #8B5CF6);
+            --grad-hot: linear-gradient(100deg, #FF2E9A, #8B5CF6);
+            --wrap: 1180px;
+            --nav-h: 72px;
+            --display: 'Syne', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            --body: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* ===== Base ===== */
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background: #f8fafc;
-            color: #333;
-            line-height: 1.6;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--body);
+            font-size: 16.5px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            color: #1e293b;
+        @media (min-width:760px) {
+            body {
+                font-size: 17px;
+            }
         }
 
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
+        img {
+            max-width: 100%;
+            display: block;
         }
 
-        h2 {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            text-align: center;
+        a {
+            color: inherit;
         }
 
-        h2 span {
-            color: #4a6cf7;
+        h1,
+        h2,
+        h3 {
+            font-family: var(--display);
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.06;
+            letter-spacing: -.015em;
         }
 
         p {
-            color: #64748b;
-            font-size: 1.1rem;
+            margin: 0;
         }
 
-        section {
-            padding: 6rem 5%;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.8rem;
-            background: #4a6cf7;
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn:hover {
-            background: #3a5bd9;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(74, 108, 247, 0.3);
-        }
-
-        /* ===== NAVBAR ===== */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 5%;
-            background: white;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            transition: all 0.3s;
-        }
-
-        .logo span {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #4a6cf7;
-            background: linear-gradient(90deg, #4a6cf7, #8a2be2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
+        ul,
+        ol {
+            margin: 0;
+            padding: 0;
             list-style: none;
         }
 
-        .nav-links li a {
-            margin-left: 2.5rem;
-            text-decoration: none;
-            color: #1e293b;
-            font-weight: 500;
-            transition: color 0.3s;
-            font-size: 1.1rem;
+        ::selection {
+            background: var(--cyan);
+            color: #031018;
         }
 
-        .nav-links li a:hover {
-            color: #4a6cf7;
+        :focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 3px;
+            border-radius: 4px;
+            box-shadow: var(--glow-cyan);
+        }
+
+        ::-webkit-scrollbar {
+            width: 11px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #232A45;
+            border-radius: 99px;
+            border: 3px solid var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #323B63;
+        }
+
+        .skip {
+            position: absolute;
+            left: 1rem;
+            top: -4rem;
+            z-index: 200;
+            background: var(--grad);
+            color: #fff;
+            padding: .7rem 1.1rem;
+            border-radius: var(--r-ctrl);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .skip:focus {
+            top: 1rem;
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: var(--wrap);
+            margin-inline: auto;
+            padding-inline: 1.25rem;
+        }
+
+        @media (min-width:760px) {
+            .wrap {
+                padding-inline: 2rem;
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .6rem;
+            font-family: var(--body);
+            font-weight: 600;
+            font-size: .95rem;
+            letter-spacing: -.01em;
+            line-height: 1;
+            padding: .98rem 1.5rem;
+            border: 1px solid transparent;
+            border-radius: var(--r-ctrl);
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: transform .25s var(--ease), background-color .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-gold {
+            background: var(--grad);
+            color: #fff;
+            box-shadow: 0 12px 34px -12px rgba(139, 92, 246, .7), var(--glow-cyan);
+        }
+
+        .btn-gold:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 16px 44px -12px rgba(139, 92, 246, .85), var(--glow-cyan), var(--glow-violet);
+        }
+
+        .btn-wa {
+            background: var(--wa);
+            color: #03200F;
+        }
+
+        .btn-wa:hover {
+            background: var(--wa-deep);
+            box-shadow: 0 14px 36px -14px rgba(37, 211, 102, .8);
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, .04);
+            border-color: var(--line-strong);
+            color: var(--text);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            background: rgba(34, 227, 255, .08);
+            box-shadow: var(--glow-cyan);
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding-inline: 1.25rem;
+            background: rgba(6, 7, 17, .72);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid transparent;
+            transition: border-color .3s var(--ease), box-shadow .3s var(--ease), background-color .3s var(--ease);
+        }
+
+        @media (min-width:760px) {
+            .navbar {
+                padding-inline: 2rem;
+            }
+        }
+
+        .navbar.scrolled {
+            border-bottom-color: var(--line);
+            background: rgba(6, 7, 17, .9);
+            box-shadow: 0 12px 40px -30px rgba(139, 92, 246, .4);
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: .7rem;
+            text-decoration: none;
+            font-family: var(--display);
+            font-weight: 800;
+            font-size: 1.04rem;
+            letter-spacing: -.01em;
+            color: var(--text);
+        }
+
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            display: grid;
+            place-items: center;
+            background: var(--grad);
+            color: #fff;
+            border-radius: 11px;
+            font-size: .84rem;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .logo b {
+            font-weight: 800;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: .35rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: .9rem;
+            font-weight: 500;
+            letter-spacing: -.01em;
+            padding: .5rem .7rem;
+            border-radius: 8px;
+            position: relative;
+            color: var(--text);
+        }
+
+        .nav-links a:not(.btn)::after {
+            content: "";
+            position: absolute;
+            left: .7rem;
+            right: .7rem;
+            bottom: .28rem;
+            height: 2px;
+            background: var(--grad);
+            box-shadow: var(--glow-cyan);
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform .3s var(--ease);
+        }
+
+        .nav-links a:not(.btn):hover::after,
+        .nav-links a[aria-current="page"]:not(.btn)::after {
+            transform: scaleX(1);
+        }
+
+        .nav-cta {
+            margin-left: .6rem;
+            padding: .72rem 1.1rem;
+            font-size: .88rem;
         }
 
         .burger {
             display: none;
+            margin-left: auto;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--r-ctrl);
+            font-size: 1rem;
+            color: var(--text);
+            background: rgba(255, 255, 255, .05);
             cursor: pointer;
-            font-size: 1.5rem;
         }
 
-        /* ===== PLANTILLAS SECTION ===== */
-        .more-templates {
-            padding-top: 10rem;
-            background: #f8fafc;
-        }
+        @media (max-width:900px) {
+            .burger {
+                display: grid;
+            }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .template-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .template-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .template-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .template-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .template-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .template-card h3 {
-            padding: 1.5rem 1.5rem 0.5rem;
-            font-size: 1.4rem;
-        }
-
-        .template-card p {
-            padding: 0 1.5rem 1.5rem;
-        }
-
-        .template-card .btn {
-            margin: 0 1.5rem 1.5rem;
-            display: block;
-            text-align: center;
-        }
-
-        /* === BOTÓN VOLVER === */
-        .back-button {
-            text-align: center;
-            margin: 4rem 0 2rem;
-        }
-
-        .btn-back {
-            background: #f8fafc;
-            color: #4a6cf7;
-            border: 2px solid #4a6cf7;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-        }
-
-        .btn-back:hover {
-            background: #4a6cf7;
-            color: white;
-        }
-
-        /* === EFECTOS COMPARTIDOS === */
-        .btn-back {
-            border-radius: 50px;
-            font-weight: 600;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: #1e293b;
-            color: white;
-        }
-
-        footer p {
-            color: #cbd5e1;
-        }
-
-        /* ===== BOTÓN WHATSAPP ===== */
-        .whatsapp-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25D366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 60px;
-            font-size: 30px;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-            z-index: 1000;
-            transition: all 0.3s;
-            animation: pulse 2s infinite;
-        }
-
-        .whatsapp-btn:hover {
-            background: #128C7E;
-            transform: scale(1.1);
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
-        /* ===== ANIMACIONES ===== */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
             .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                top: var(--nav-h);
                 left: 0;
-                width: 100%;
-                background: white;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                padding: 1rem 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: .15rem;
+                background: var(--bg-2);
+                border-top: 1px solid var(--line);
+                border-bottom: 1px solid var(--line);
+                padding: .8rem 1.25rem 1.4rem;
+                box-shadow: 0 34px 70px -38px rgba(0, 0, 0, .9);
+                display: none;
             }
 
             .nav-links.active {
                 display: flex;
             }
 
-            .nav-links li {
-                margin: 0;
-                text-align: center;
+            .nav-links a {
+                padding: .85rem .6rem;
+                border-bottom: 1px solid var(--line);
+                border-radius: 0;
+                font-size: 1rem;
             }
 
-            .nav-links li a {
-                margin: 0;
-                padding: 1rem;
-                display: block;
-                width: 100%;
+            .nav-links a:not(.btn)::after {
+                display: none;
             }
 
-            .burger {
-                display: block;
-            }
-
-            h1 {
-                font-size: 2.2rem;
-            }
-
-            h2 {
-                font-size: 1.8rem;
+            .nav-cta {
+                margin: .9rem 0 0;
+                border-bottom: 0;
+                justify-content: center;
             }
         }
 
-        @media (max-width: 576px) {
-            section {
-                padding: 4rem 5%;
+        /* ===== Gallery hero ===== */
+        .gallery-hero {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background: transparent;
+            color: var(--text);
+            padding-block: clamp(2.8rem, 6vw, 4.6rem) clamp(3rem, 6vw, 4.6rem);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .gallery-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(237, 242, 255, .05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(237, 242, 255, .05) 1px, transparent 1px);
+            background-size: 56px 56px;
+            -webkit-mask-image: radial-gradient(ellipse 90% 65% at 50% 0%, #000 25%, transparent 80%);
+            mask-image: radial-gradient(ellipse 90% 65% at 50% 0%, #000 25%, transparent 80%);
+        }
+
+        .hex-orbs {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            filter: blur(90px);
+            pointer-events: none;
+        }
+
+        .hex-orbs i {
+            position: absolute;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .hex-orbs i:nth-child(1) {
+            width: 480px;
+            height: 480px;
+            top: -220px;
+            left: -140px;
+            background: radial-gradient(circle at 30% 30%, rgba(34, 227, 255, .36), transparent 60%), radial-gradient(circle at 70% 60%, rgba(139, 92, 246, .36), transparent 65%);
+            animation: drift 16s var(--ease) infinite;
+        }
+
+        .hex-orbs i:nth-child(2) {
+            width: 520px;
+            height: 520px;
+            top: -80px;
+            right: -160px;
+            background: radial-gradient(circle at 40% 40%, rgba(255, 46, 154, .3), transparent 60%), radial-gradient(circle at 60% 70%, rgba(139, 92, 246, .32), transparent 65%);
+            animation: drift 22s var(--ease) infinite reverse;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(5%, 4%, 0) scale(1.14);
+            }
+            100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+
+        .gallery-hero .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            width: fit-content;
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            background: rgba(34, 227, 255, .07);
+            border: 1px solid rgba(34, 227, 255, .28);
+            border-radius: 999px;
+            padding: .42rem .85rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .gallery-hero .eyebrow::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--magenta);
+            box-shadow: 0 0 12px 0 var(--magenta);
+        }
+
+        .gallery-hero h1 {
+            font-size: clamp(2rem, 5.2vw, 3.8rem);
+            max-width: 18ch;
+            letter-spacing: -.02em;
+        }
+
+        .gallery-hero p {
+            margin-top: 1.1rem;
+            max-width: 56ch;
+            color: var(--muted);
+        }
+
+        .tools {
+            display: grid;
+            gap: 1rem;
+            margin-top: clamp(2.4rem, 5vw, 3.4rem);
+            padding-top: clamp(2rem, 4vw, 2.6rem);
+            border-top: 1px solid var(--line-strong);
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            background: var(--surface);
+            border: 1px solid var(--line-strong);
+            border-radius: var(--r-ctrl);
+            padding: .15rem .35rem .15rem 1.05rem;
+            max-width: 560px;
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+        }
+
+        .search-box:focus-within {
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(34, 227, 255, .16), var(--glow-cyan);
+        }
+
+        .search-icon {
+            color: var(--faint);
+            font-size: .95rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: 0;
+            background: transparent;
+            font-family: var(--body);
+            font-size: .98rem;
+            color: var(--text);
+            padding: .88rem 0;
+            min-width: 0;
+        }
+
+        .search-box input:focus {
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(237, 242, 255, .4);
+        }
+
+        .clear-btn {
+            display: none;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: .95rem;
+        }
+
+        .clear-btn.visible {
+            display: grid;
+            place-items: center;
+        }
+
+        .clear-btn:hover {
+            background: var(--surface-2);
+            color: var(--text);
+        }
+
+        .search-results {
+            font-size: .88rem;
+            font-weight: 600;
+            color: var(--muted);
+            min-height: 1.2rem;
+        }
+
+        .search-results strong {
+            color: var(--cyan);
+            text-shadow: 0 0 14px rgba(34, 227, 255, .4);
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+        }
+
+        .chip {
+            font-family: var(--body);
+            font-size: .86rem;
+            font-weight: 600;
+            color: var(--text);
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--line-strong);
+            border-radius: var(--r-pill);
+            padding: .58rem 1.05rem;
+            cursor: pointer;
+            transition: background-color .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+        }
+
+        .chip:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            background: rgba(34, 227, 255, .08);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .chip.active {
+            background: var(--grad);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 12px 30px -12px rgba(139, 92, 246, .7), var(--glow-cyan);
+        }
+
+        /* ===== Gallery grid ===== */
+        .gallery {
+            background: var(--bg);
+            padding-block: clamp(2.6rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+        }
+
+        .template-grid {
+            display: grid;
+            gap: 1.3rem;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+        }
+
+        .tpl {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--r-card);
+            overflow: hidden;
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            transition: opacity .6s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+        }
+
+        .tpl:hover {
+            transform: translateY(-6px);
+            border-color: rgba(139, 92, 246, .6);
+            box-shadow: var(--shadow-lift), var(--glow-violet);
+        }
+
+        .tpl-media {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .tpl-media img {
+            width: 100%;
+            aspect-ratio: 2.15 / 1;
+            object-fit: cover;
+            object-position: top center;
+            filter: saturate(.95) contrast(1.02);
+            transition: transform .55s var(--ease), filter .55s var(--ease);
+        }
+
+        .tpl:hover .tpl-media img {
+            transform: scale(1.035);
+            filter: saturate(1.05) contrast(1.02);
+        }
+
+        .tpl-price {
+            position: absolute;
+            left: .8rem;
+            bottom: .8rem;
+            background: var(--grad);
+            color: #fff;
+            font-size: .78rem;
+            font-weight: 700;
+            padding: .34rem .85rem;
+            border-radius: 999px;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .tpl-body {
+            padding: 1.2rem 1.3rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: .55rem;
+            flex: 1;
+        }
+
+        .tpl-body h3 {
+            font-size: clamp(1rem, 1.4vw, 1.15rem);
+        }
+
+        .tpl-body p {
+            color: var(--muted);
+            font-size: .92rem;
+        }
+
+        .tpl-cat {
+            align-self: flex-start;
+            font-size: .72rem;
+            font-weight: 600;
+            color: var(--cyan);
+            background: rgba(34, 227, 255, .07);
+            border: 1px solid rgba(34, 227, 255, .3);
+            border-radius: var(--r-pill);
+            padding: .26rem .7rem;
+        }
+
+        .tpl-buy {
+            margin-top: auto;
+            padding-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            color: var(--cyan);
+            font-weight: 600;
+            font-size: .9rem;
+            text-decoration: none;
+            align-self: flex-start;
+        }
+
+        .tpl-buy i {
+            transition: transform .3s var(--ease);
+        }
+
+        .tpl-buy:hover i {
+            transform: translateX(4px);
+        }
+
+        .tpl.filtered-out {
+            display: none;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: clamp(2.5rem, 6vw, 4rem) 1rem;
+            border: 1px dashed var(--line-strong);
+            border-radius: var(--r-card);
+            background: var(--surface);
+        }
+
+        .no-results i {
+            font-size: 1.5rem;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: .9rem;
+        }
+
+        .no-results p {
+            font-family: var(--display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: .4rem;
+        }
+
+        .no-results small {
+            color: var(--muted);
+            font-size: .88rem;
+        }
+
+        .back-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 2.6rem;
+            padding-bottom: clamp(1rem, 3vw, 2rem);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: #04050D;
+            color: #DCE4F5;
+            border-top: 1px solid var(--line);
+            padding-block: clamp(2.6rem, 5vw, 4rem) 1.5rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 1px;
+            background: var(--grad);
+            opacity: .7;
+        }
+
+        .footer-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width:760px) {
+            .footer-grid {
+                grid-template-columns: 1.4fr 1fr 1fr;
+                gap: 3rem;
+            }
+        }
+
+        .footer-brand {
+            font-family: var(--display);
+            font-weight: 800;
+            font-size: 1.12rem;
+            letter-spacing: -.01em;
+            margin-bottom: .7rem;
+            color: #fff;
+        }
+
+        .footer-brand b {
+            font-weight: 800;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer p {
+            color: #8A95B5;
+            font-size: .92rem;
+            max-width: 34ch;
+        }
+
+        .footer h4 {
+            font-family: var(--body);
+            font-size: .74rem;
+            font-weight: 600;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: #5A6486;
+            margin: 0 0 1rem;
+        }
+
+        .footer-links {
+            display: grid;
+            gap: .55rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            font-size: .93rem;
+            color: #B9C2DB;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+            text-shadow: 0 0 14px rgba(34, 227, 255, .45);
+        }
+
+        .footer-bottom {
+            margin-top: clamp(2.2rem, 4vw, 3.2rem);
+            padding-top: 1.3rem;
+            border-top: 1px solid var(--line);
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem 1.5rem;
+            justify-content: space-between;
+            font-size: .84rem;
+            color: #6A7598;
+        }
+
+        /* ===== WhatsApp FAB ===== */
+        .whatsapp-btn {
+            position: fixed;
+            right: 1.1rem;
+            bottom: 1.1rem;
+            z-index: 120;
+            width: 56px;
+            height: 56px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--wa);
+            color: #03200F;
+            font-size: 1.55rem;
+            text-decoration: none;
+            box-shadow: 0 18px 40px -16px rgba(37, 211, 102, .8);
+            transition: transform .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease);
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.08);
+            background: var(--wa-deep);
+            box-shadow: 0 0 34px -6px rgba(37, 211, 102, .85);
+        }
+
+        /* ===== HOLOGRAPHIC FX ===== */
+        .fx-field {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            display: block;
+            pointer-events: none;
+        }
+
+        .fx-scrim {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(ellipse 92% 80% at 50% 24%, rgba(6, 7, 17, .58), rgba(6, 7, 17, 0) 72%);
+        }
+
+        body.fx-on .hex-orbs {
+            display: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .tpl,
+            .strip-card {
+                position: relative;
+                transform-style: preserve-3d;
+            }
+
+            .tpl-glare {
+                position: absolute;
+                inset: 0;
+                z-index: 3;
+                border-radius: inherit;
+                pointer-events: none;
+                background:
+                    radial-gradient(520px circle at var(--gx, 50%) var(--gy, 50%), rgba(237, 242, 255, .16), transparent 45%);
+                opacity: 0;
+                transition: opacity .35s var(--ease);
+            }
+
+            .tpl:hover .tpl-glare,
+            .strip-card:hover .tpl-glare {
+                opacity: 1;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .hex-orbs i {
+                animation: none;
+            }
+
+            .fx-field {
+                display: none;
+            }
+
+            .btn:hover,
+            .tpl:hover,
+            .whatsapp-btn:hover {
+                transform: none;
+            }
+
+            .tpl:hover .tpl-media img {
+                transform: none;
+                filter: none;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Barra de navegación -->
-    <nav class="navbar">
-        <div class="logo">
-            <span>WebCraft Ecuador</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html#inicio">Inicio</a></li>
+    <a class="skip" href="#catalogo">Saltar al contenido</a>
+
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="logo" aria-label="WebCraft Ecuador, ir al inicio">
+            <span class="logo-mark" aria-hidden="true"><i class="fas fa-code"></i></span>
+            <span>WebCraft <b>Ecuador</b></span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html#rubros">Rubros</a></li>
             <li><a href="index.html#servicios">Servicios</a></li>
-            <li><a href="index.html#plantillas">Plantillas</a></li>
+            <li><a href="index.html#proceso">Proceso</a></li>
             <li><a href="index.html#precios">Precios</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+            <li><a class="btn btn-gold nav-cta"
+                    href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20tus%20plantillas%20web.%20¿Podrías%20darme%20más%20información?"
+                    target="_blank" rel="noopener">Escríbenos</a></li>
         </ul>
-        <div class="burger">
-            <i class="fas fa-bars"></i>
+        <div class="burger" id="burger" role="button" aria-label="Abrir menú" aria-expanded="false" tabindex="0">
+            <i class="fas fa-bars" id="burgerIcon"></i>
         </div>
     </nav>
 
-    <section class="more-templates">
-        <div class="container">
-            <h2 class="animate-on-scroll">Explora todas nuestras <span>plantillas</span></h2>
+    <header class="gallery-hero">
+        <div class="hex-orbs" aria-hidden="true">
+            <i></i>
+            <i></i>
+        </div>
+        <span class="fx-scrim" aria-hidden="true"></span>
+        <div class="wrap">
+            <span class="eyebrow">Catálogo — 17 diseños a $35</span>
+            <h1>El catálogo completo de plantillas</h1>
+            <p>Diecisiete diseños pensados por rubro. Todos son personalizables, cuestan $35 y los entregamos listos
+                para publicar en 24 horas. Filtra por categoría o busca el tuyo por nombre.</p>
+        </div>
+    </header>
 
-            <div class="template-grid">
-                <div class="template-card animate-on-scroll">
-                    <img src="img/Centro_Estetica.jpg" alt="Plantilla Centro de Estética">
-                    <h3>Plantilla Centro de Estética</h3>
-                    <p>Diseñada para centros de estética y belleza, incluye secciones para servicios, promociones, galería de trabajos, testimonios y formulario de reserva de citas.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Centro%20de%20Estética%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+    <section class="gallery" id="catalogo">
+        <div class="wrap">
+            <div class="tools">
+                <div class="search-box">
+                    <i class="fas fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                    <input type="search" id="searchInput" placeholder="Busca una plantilla, ej. spa, tatuajes..."
+                        aria-label="Buscar plantillas" autocomplete="off">
+                    <button type="button" class="clear-btn" id="searchClear" aria-label="Limpiar búsqueda">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/clinica_odontologica.jpg" alt="Plantilla Clínica Odontológica">
-                    <h3>Plantilla Clínica Odontológica</h3>
-                    <p>Ideal para clínicas dentales y odontólogos independientes. Incluye secciones para servicios odontológicos, equipo profesional, antes/después, y agenda de citas online.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Clínica%20Odontológica%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/contador_profesional.jpg" alt="Plantilla Contador Profesional">
-                    <h3>Plantilla Contador Profesional</h3>
-                    <p>Diseñada para contadores y firmas de accounting. Incluye secciones para servicios contables, asesorías fiscales, testimonios de clientes y formulario de contacto profesional.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Contador%20Profesional%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/docente_particular.jpg" alt="Plantilla Docente Particular">
-                    <h3>Plantilla Docente Particular</h3>
-                    <p>Perfecta para profesores y tutores independientes. Incluye secciones para materias que enseña, metodología, horarios disponibles, testimonios y contacto para clases.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Docente%20Particular%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/entrenador_personal.jpg" alt="Plantilla Entrenador Personal">
-                    <h3>Plantilla Entrenador Personal</h3>
-                    <p>Ideal para entrenadores personales y preparadores físicos. Incluye secciones para programas de entrenamiento, testimonios de clientes, galería de resultados y planificación de sesiones.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Entrenador%20Personal%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/fisioterapia.jpg" alt="Plantilla Servicios de Fisioterapia">
-                    <h3>Plantilla Servicios de Fisioterapia</h3>
-                    <p>Diseñada para fisioterapeutas y centros de rehabilitación. Incluye secciones para tratamientos especializados, equipo profesional, testimonios y agendamiento de citas terapéuticas.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20de%20Fisioterapia%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-                
-                <div class="template-card animate-on-scroll">
-                    <img src="img/mudanzas.JPG" alt="Plantilla Servicio de Mudanzas">
-                    <h3>Plantilla Servicio de Mudanzas</h3>
-                    <p>Perfecta para empresas de mudanzas y transporte de carga. Incluye secciones para servicios ofrecidos, cobertura geográfica, calculadora de costos y formulario de cotizaciones.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Mudanzas%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/negocio_tatuajes.jpg" alt="Plantilla Negocio de Tatuajes">
-                    <h3>Plantilla Negocio de Tatuajes</h3>
-                    <p>Ideal para estudios de tatuaje y artistas del tatuaje. Incluye galería de trabajos, estilos especializados, proceso de trabajo, cuidados posteriores y agendamiento de citas.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Negocio%20de%20Tatuajes%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/nutricionista.jpg" alt="Plantilla Servicio de Nutricionista">
-                    <h3>Plantilla Servicio de Nutricionista</h3>
-                    <p>Diseñada para nutricionistas y dietistas. Incluye secciones para planes nutricionales, especialidades, testimonios de pacientes, blog de alimentación saludable y agendamiento de consultas.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Nutricionista%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-                
-                <div class="template-card animate-on-scroll">
-                    <img src="img/peluqueria.jpg" alt="Plantilla Peluquería">
-                    <h3>Plantilla Peluquería</h3>
-                    <p>Perfecta para peluquerías y salones de belleza. Incluye secciones para servicios de corte, coloración, tratamientos, promociones, portfolio de trabajos y reserva de citas online.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Peluquería%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/psiquiatria.jpg" alt="Plantilla Servicios Psiquiátricos">
-                    <h3>Plantilla Servicios Psiquiátricos</h3>
-                    <p>Diseñada para psiquiatras y centros de salud mental. Incluye secciones para especialidades, enfoque de tratamiento, equipo profesional, testimonios y agendamiento de consultas confidenciales.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20Psiquiátricos%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/servicios_limpieza.jpg" alt="Plantilla Servicio de Limpieza">
-                    <h3>Plantilla Servicio de Limpieza</h3>
-                    <p>Ideal para empresas de limpieza y mantenimiento. Incluye secciones para servicios residenciales y comerciales, métodos de trabajo, productos utilizados y formulario de solicitud de presupuestos.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Limpieza%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-                
-                <div class="template-card animate-on-scroll">
-                    <img src="img/spa.JPG" alt="Plantilla SPA">
-                    <h3>Plantilla SPA</h3>
-                    <p>Diseñada para centros de spa y bienestar. Incluye secciones para tratamientos relajantes, terapias, paquetes promocionales, galería de instalaciones y reserva de servicios online.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20SPA%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
-                </div>
-
-                <div class="template-card animate-on-scroll">
-                    <img src="img/terapia_ocupacional.jpg" alt="Plantilla Servicios de Terapia Ocupacional">
-                    <h3>Plantilla Servicios de Terapia Ocupacional</h3>
-                    <p>Perfecta para terapeutas ocupacionales y centros de rehabilitación. Incluye secciones para áreas de intervención, metodología de trabajo, testimonios y agendamiento de evaluaciones.</p>
-                    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20de%20Terapia%20Ocupacional%20($35).%20¿Podrías%20darme%20más%20información?" class="btn" target="_blank">Comprar ($35)</a>
+                <div class="search-results" id="searchResults" role="status" aria-live="polite"></div>
+                <div class="filter-chips" id="filterChips" role="group"
+                    aria-label="Filtrar plantillas por categoría">
+                    <button type="button" class="chip active" data-category="all">Todas</button>
+                    <button type="button" class="chip" data-category="salud">Salud</button>
+                    <button type="button" class="chip" data-category="belleza">Belleza</button>
+                    <button type="button" class="chip" data-category="profesionales">Profesionales</button>
+                    <button type="button" class="chip" data-category="educacion">Educación</button>
+                    <button type="button" class="chip" data-category="deporte">Deporte</button>
+                    <button type="button" class="chip" data-category="hogar">Hogar</button>
+                    <button type="button" class="chip" data-category="automotriz">Automotriz</button>
                 </div>
             </div>
 
-            <!-- Botón de regreso -->
-            <div class="back-button">
-                <a href="index.html" class="btn btn-back animate-on-scroll">
-                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+            <div class="template-grid" id="templateGrid">
+                <div class="template-card tpl" data-category="belleza">
+                    <div class="tpl-media">
+                        <img src="img/Centro_Estetica.JPG" alt="Plantilla Centro de Estética" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Centro de Estética</h3>
+                        <p>Servicios, promociones, galería de trabajos, testimonios y reserva de citas para centros de
+                            estética.</p>
+                        <span class="tpl-cat">Belleza</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Centro%20de%20Estética%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="salud">
+                    <div class="tpl-media">
+                        <img src="img/clinica_odontologica.JPG" alt="Plantilla Clínica Odontológica" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Clínica Odontológica</h3>
+                        <p>Servicios odontológicos, equipo profesional, antes/después y agenda de citas online para
+                            clínicas dentales.</p>
+                        <span class="tpl-cat">Salud</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Clínica%20Odontológica%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="profesionales">
+                    <div class="tpl-media">
+                        <img src="img/Contador_profesional.JPG" alt="Plantilla Contador Profesional" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Contador Profesional</h3>
+                        <p>Servicios contables, asesorías fiscales, testimonios de clientes y contacto profesional para
+                            contadores.</p>
+                        <span class="tpl-cat">Profesionales</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Contador%20Profesional%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="educacion">
+                    <div class="tpl-media">
+                        <img src="img/docente_particular.JPG" alt="Plantilla Docente Particular" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Docente Particular</h3>
+                        <p>Materias que enseña, metodología, horarios disponibles y testimonios para profesores y tutores
+                            independientes.</p>
+                        <span class="tpl-cat">Educación</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Docente%20Particular%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="deporte">
+                    <div class="tpl-media">
+                        <img src="img/entrenador_personal.JPG" alt="Plantilla Entrenador Personal" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Entrenador Personal</h3>
+                        <p>Programas de entrenamiento, testimonios, galería de resultados y planificación de sesiones
+                            para preparadores físicos.</p>
+                        <span class="tpl-cat">Deporte</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Entrenador%20Personal%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="salud">
+                    <div class="tpl-media">
+                        <img src="img/fisioterapia.JPG" alt="Plantilla Servicios de Fisioterapia" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Servicios de Fisioterapia</h3>
+                        <p>Tratamientos especializados, equipo profesional, testimonios y agendamiento de citas
+                            terapéuticas.</p>
+                        <span class="tpl-cat">Salud</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20de%20Fisioterapia%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="hogar">
+                    <div class="tpl-media">
+                        <img src="img/mudanzas.JPG" alt="Plantilla Servicio de Mudanzas" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Servicio de Mudanzas</h3>
+                        <p>Servicios ofrecidos, cobertura geográfica, calculadora de costos y formulario de cotizaciones
+                            para empresas de mudanzas.</p>
+                        <span class="tpl-cat">Hogar</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Mudanzas%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="belleza">
+                    <div class="tpl-media">
+                        <img src="img/negocio_tatuajes.JPG" alt="Plantilla Negocio de Tatuajes" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Negocio de Tatuajes</h3>
+                        <p>Galería de trabajos, estilos especializados, proceso de trabajo, cuidados posteriores y
+                            agendamiento de citas.</p>
+                        <span class="tpl-cat">Belleza</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Negocio%20de%20Tatuajes%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="salud">
+                    <div class="tpl-media">
+                        <img src="img/nutricionista.JPG" alt="Plantilla Servicio de Nutricionista" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Servicio de Nutricionista</h3>
+                        <p>Planes nutricionales, especialidades, testimonios de pacientes, blog de alimentación
+                            saludable y consultas.</p>
+                        <span class="tpl-cat">Salud</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Nutricionista%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="belleza">
+                    <div class="tpl-media">
+                        <img src="img/peluqueria.JPG" alt="Plantilla Peluquería" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Peluquería</h3>
+                        <p>Servicios de corte, coloración, tratamientos, promociones, portfolio de trabajos y reserva de
+                            citas online.</p>
+                        <span class="tpl-cat">Belleza</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Peluquería%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="salud">
+                    <div class="tpl-media">
+                        <img src="img/psiquiatria.JPG" alt="Plantilla Servicios Psiquiátricos" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Servicios Psiquiátricos</h3>
+                        <p>Especialidades, enfoque de tratamiento, equipo profesional, testimonios y consultas
+                            confidenciales para salud mental.</p>
+                        <span class="tpl-cat">Salud</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20Psiquiátricos%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="hogar">
+                    <div class="tpl-media">
+                        <img src="img/servicios_limpieza.JPG" alt="Plantilla Servicio de Limpieza" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Servicio de Limpieza</h3>
+                        <p>Servicios residenciales y comerciales, métodos de trabajo, productos utilizados y solicitud de
+                            presupuestos.</p>
+                        <span class="tpl-cat">Hogar</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicio%20de%20Limpieza%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="belleza">
+                    <div class="tpl-media">
+                        <img src="img/spa.JPG" alt="Plantilla SPA" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla SPA</h3>
+                        <p>Tratamientos relajantes, terapias, paquetes promocionales, galería de instalaciones y reserva
+                            de servicios online.</p>
+                        <span class="tpl-cat">Belleza</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20SPA%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="salud">
+                    <div class="tpl-media">
+                        <img src="img/terapia_ocupacional.JPG" alt="Plantilla Servicios de Terapia Ocupacional"
+                            loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla Servicios de Terapia Ocupacional</h3>
+                        <p>Áreas de intervención, metodología de trabajo, testimonios y agendamiento de evaluaciones para
+                            terapeutas ocupacionales.</p>
+                        <span class="tpl-cat">Salud</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20de%20Terapia%20Ocupacional%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="automotriz">
+                    <div class="tpl-media">
+                        <img src="img/taller_mecanico.JPG" alt="Plantilla para Taller Mecánico" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla para Taller Mecánico</h3>
+                        <p>Servicios, promociones, testimonios de clientes y formulario de citas para talleres mecánicos
+                            y automoción.</p>
+                        <span class="tpl-cat">Automotriz</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Taller%20Mecánico%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="salud">
+                    <div class="tpl-media">
+                        <img src="img/psicologo.JPG" alt="Plantilla para Servicios Psicológicos" loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla para Servicios Psicológicos</h3>
+                        <p>Especialidades, perfil profesional, testimonios y agenda de citas para psicólogos y centros de
+                            terapia.</p>
+                        <span class="tpl-cat">Salud</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Servicios%20Psicológicos%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="template-card tpl" data-category="profesionales">
+                    <div class="tpl-media">
+                        <img src="img/coaching_profesional.JPG" alt="Plantilla para Coaching Profesional"
+                            loading="lazy">
+                        <span class="tpl-price">$35</span>
+                    </div>
+                    <div class="tpl-body">
+                        <h3>Plantilla para Coaching Profesional</h3>
+                        <p>Biografía, metodología, programas de coaching, testimonios y reserva de sesiones para coaches
+                            y mentores.</p>
+                        <span class="tpl-cat">Profesionales</span>
+                        <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20la%20plantilla%20para%20Coaching%20Profesional%20($35).%20¿Podrías%20darme%20más%20información?"
+                            class="tpl-buy" target="_blank" rel="noopener">Pedir por WhatsApp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="back-row">
+                <a href="index.html" class="btn btn-ghost">
+                    <i class="fas fa-arrow-left"></i> Volver al inicio
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; <script>
-                document.write(new Date().getFullYear())
-            </script> WebCraft Ecuador. Todos los derechos reservados.</p>
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">WebCraft <b>Ecuador</b></div>
+                    <p>Plantillas web y sitios a medida para negocios y profesionales de Ecuador. Hecho en Quito.</p>
+                </div>
+                <div>
+                    <h4>Navegación</h4>
+                    <div class="footer-links">
+                        <a href="index.html">Inicio</a>
+                        <a href="index.html#rubros">Rubros</a>
+                        <a href="index.html#precios">Precios</a>
+                        <a href="index.html#contacto">Contacto</a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Contacto</h4>
+                    <div class="footer-links">
+                        <a href="https://wa.me/593962129090" target="_blank" rel="noopener">+593 96 212 9090</a>
+                        <a href="mailto:aronortiz90@yahoo.com">aronortiz90@yahoo.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; <span id="year"></span> WebCraft Ecuador. Todos los derechos reservados.</span>
+                <span>Precios en dólares — Quito, Ecuador</span>
+            </div>
+        </div>
     </footer>
 
-    <!-- Botón flotante de WhatsApp -->
-    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20tus%20plantillas%20web.%20¿Podrías%20darme%20más%20información?" class="whatsapp-btn" target="_blank">
+    <a href="https://wa.me/593962129090?text=Hola,%20estoy%20interesado%20en%20tus%20plantillas%20web.%20¿Podrías%20darme%20más%20información?"
+        class="whatsapp-btn" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <script>document.documentElement.classList.replace('no-js', 'js');</script>
+    <canvas id="fx-field" class="fx-field" aria-hidden="true"></canvas>
     <script>
-        // JavaScript para el menú responsive
-        document.querySelector('.burger').addEventListener('click', () => {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-            
-            // Cambiar ícono entre menú y X
-            const burgerIcon = document.querySelector('.burger i');
-            if (navLinks.classList.contains('active')) {
-                burgerIcon.classList.remove('fa-bars');
-                burgerIcon.classList.add('fa-times');
-            } else {
-                burgerIcon.classList.remove('fa-times');
-                burgerIcon.classList.add('fa-bars');
-            }
-        });
+        (function () {
+            document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Cerrar menú al hacer clic en un enlace (en móviles)
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                const navLinks = document.querySelector('.nav-links');
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                    const burgerIcon = document.querySelector('.burger i');
-                    burgerIcon.classList.remove('fa-times');
-                    burgerIcon.classList.add('fa-bars');
+            /* ===== NAVBAR ===== */
+            const navbar = document.getElementById('navbar');
+            const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 22);
+            onScroll();
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            const burger = document.getElementById('burger');
+            const navLinks = document.getElementById('navLinks');
+            const burgerIcon = document.getElementById('burgerIcon');
+
+            function toggleMenu(open) {
+                navLinks.classList.toggle('active', open);
+                burger.setAttribute('aria-expanded', String(open));
+                burgerIcon.className = open ? 'fas fa-times' : 'fas fa-bars';
+            }
+
+            burger.addEventListener('click', () => toggleMenu(!navLinks.classList.contains('active')));
+            burger.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleMenu(!navLinks.classList.contains('active'));
                 }
             });
-        });
-
-        // Animación al hacer scroll
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.style.background = '#fff';
-                navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-            } else {
-                navbar.style.background = '#fff';
-                navbar.style.boxShadow = 'none';
-            }
-        });
-
-        // Animaciones con Anime.js
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animación inicial del título
-            anime({
-                targets: '.more-templates h2',
-                translateY: [-30, 0],
-                opacity: [0, 1],
-                duration: 1000,
-                easing: 'easeOutCubic',
-                delay: 300
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => toggleMenu(false));
+            });
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 900) toggleMenu(false);
             });
 
-            // Animaciones al hacer scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
+            const cards = document.querySelectorAll('.template-card');
 
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const element = entry.target;
-                        
-                        if (element.classList.contains('animate-on-scroll')) {
-                            anime({
-                                targets: element,
-                                translateY: [50, 0],
-                                opacity: [0, 1],
-                                duration: 800,
-                                easing: 'easeOutCubic'
-                            });
-                            element.classList.add('animated');
-                        }
-                        
-                        // Animación específica para tarjetas de plantillas
-                        if (element.classList.contains('template-card')) {
-                            anime({
-                                targets: element,
-                                translateY: [60, 0],
-                                scale: [0.9, 1],
-                                opacity: [0, 1],
-                                duration: 800,
-                                easing: 'easeOutBack',
-                                delay: anime.stagger(100, {grid: [3, 5], from: 'center'})
-                            });
-                        }
-                    }
-                });
-            }, observerOptions);
+            /* ===== BUSCADOR Y CATEGORÍAS ===== */
+            const searchInput = document.getElementById('searchInput');
+            const searchClear = document.getElementById('searchClear');
+            const searchResults = document.getElementById('searchResults');
+            const filterChips = document.getElementById('filterChips');
+            const grid = document.getElementById('templateGrid');
 
-            // Observar elementos para animaciones
-            document.querySelectorAll('.animate-on-scroll').forEach(el => {
-                observer.observe(el);
+            let activeCategory = 'all';
+            let noResultsEl = null;
+
+            const normalize = (value) => value
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim();
+
+            const cardData = Array.from(cards).map(card => {
+                const title = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
+                const desc = card.querySelector('p') ? card.querySelector('p').textContent : '';
+                const cat = card.dataset.category || '';
+                const catLabel = card.querySelector('.tpl-cat') ? card.querySelector('.tpl-cat').textContent : '';
+                return {
+                    el: card,
+                    category: cat,
+                    text: normalize(title + ' ' + desc + ' ' + cat + ' ' + catLabel)
+                };
             });
 
-            // Animación de botones al hover
-            document.querySelectorAll('.btn').forEach(button => {
-                button.addEventListener('mouseenter', function() {
-                    anime({
-                        targets: this,
-                        scale: 1.05,
-                        duration: 200,
-                        easing: 'easeOutBack'
-                    });
-                });
+            function runSearch() {
+                const query = normalize(searchInput.value);
+                const filtering = query.length > 0 || activeCategory !== 'all';
+                searchClear.classList.toggle('visible', query.length > 0);
 
-                button.addEventListener('mouseleave', function() {
-                    anime({
-                        targets: this,
-                        scale: 1,
-                        duration: 200,
-                        easing: 'easeOutBack'
-                    });
-                });
-            });
-
-            // Animación de las tarjetas al hover
-            document.querySelectorAll('.template-card').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    anime({
-                        targets: this,
-                        translateY: -15,
-                        duration: 300,
-                        easing: 'easeOutCubic'
-                    });
-                    
-                    // Animación del botón dentro de la tarjeta
-                    const button = this.querySelector('.btn');
-                    if (button) {
-                        anime({
-                            targets: button,
-                            scale: 1.05,
-                            backgroundColor: '#3a5bd9',
-                            duration: 300,
-                            easing: 'easeOutCubic'
-                        });
+                let matches = 0;
+                cardData.forEach(({ el, text, category }) => {
+                    const inCategory = activeCategory === 'all' || category === activeCategory;
+                    const hit = inCategory && (query === '' || text.includes(query));
+                    el.classList.toggle('filtered-out', !hit);
+                    if (hit) {
+                        matches++;
                     }
                 });
 
-                card.addEventListener('mouseleave', function() {
-                    anime({
-                        targets: this,
-                        translateY: 0,
-                        duration: 300,
-                        easing: 'easeOutCubic'
-                    });
-                    
-                    // Restaurar el botón
-                    const button = this.querySelector('.btn');
-                    if (button) {
-                        anime({
-                            targets: button,
-                            scale: 1,
-                            backgroundColor: '#4a6cf7',
-                            duration: 300,
-                            easing: 'easeOutCubic'
-                        });
+                const term = searchInput.value.replace(/[<>&]/g, '');
+                const activeChip = filterChips.querySelector('.chip.active');
+                const chipName = activeCategory === 'all' || !activeChip ? '' : activeChip.textContent.trim();
+                const emptyMessage = term
+                    ? 'No encontramos plantillas para "' + term + '".'
+                    : 'Aún no hay plantillas en la categoría "' + chipName + '".';
+
+                if (!filtering) {
+                    searchResults.textContent = '';
+                } else if (matches > 0) {
+                    searchResults.innerHTML = '<strong>' + matches + '</strong> ' + (matches === 1 ? 'plantilla' : 'plantillas') + (activeCategory === 'all' ? ' encontrada' + (matches === 1 ? '' : 's') : ' en esta categoría');
+                } else {
+                    searchResults.textContent = emptyMessage;
+                }
+
+                if (matches === 0 && filtering) {
+                    if (!noResultsEl) {
+                        noResultsEl = document.createElement('div');
+                        noResultsEl.className = 'no-results';
+                        noResultsEl.innerHTML = '<i class="fas fa-magnifying-glass"></i>' +
+                            '<p>' + emptyMessage + '</p>' +
+                            '<small>Prueba con otra palabra, como "spa", "tatuajes" o "psicología".</small>';
+                        grid.appendChild(noResultsEl);
+                    } else {
+                        noResultsEl.querySelector('p').textContent = emptyMessage;
                     }
-                });
-            });
-
-            // Efecto de carga progresiva para las imágenes
-            document.querySelectorAll('.template-card img').forEach(img => {
-                img.addEventListener('load', function() {
-                    anime({
-                        targets: this,
-                        opacity: [0, 1],
-                        duration: 600,
-                        easing: 'easeOutCubic'
-                    });
-                });
-            });
-
-            // Animación del botón de WhatsApp
-            const whatsappBtn = document.querySelector('.whatsapp-btn');
-            if (whatsappBtn) {
-                setInterval(() => {
-                    anime({
-                        targets: whatsappBtn,
-                        scale: [1, 1.1, 1],
-                        duration: 2000,
-                        easing: 'easeInOutSine'
-                    });
-                }, 4000);
+                } else if (noResultsEl) {
+                    noResultsEl.remove();
+                    noResultsEl = null;
+                }
             }
 
-            // Animación del navbar al cargar
-            anime({
-                targets: '.navbar',
-                translateY: [-100, 0],
-                opacity: [0, 1],
-                duration: 800,
-                easing: 'easeOutCubic'
+            filterChips.addEventListener('click', event => {
+                const chip = event.target.closest('.chip');
+                if (!chip) return;
+                activeCategory = chip.dataset.category;
+                filterChips.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === chip));
+                runSearch();
             });
 
-            // Efecto de onda al hacer clic en botones
-            document.querySelectorAll('.btn').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    const ripple = document.createElement('span');
-                    const rect = this.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
+            searchInput.addEventListener('input', runSearch);
+            searchClear.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.focus();
+                runSearch();
+            });
 
-                    ripple.style.cssText = `
-                        position: absolute;
-                        width: ${size}px;
-                        height: ${size}px;
-                        background: rgba(255, 255, 255, 0.5);
-                        border-radius: 50%;
-                        left: ${x}px;
-                        top: ${y}px;
-                        transform: scale(0);
-                        pointer-events: none;
-                    `;
+            /* ===== DEEP LINK: plantillas.html?cat=salud ===== */
+            let requested = '';
+            try {
+                requested = new URLSearchParams(window.location.search).get('cat') || '';
+            } catch (err) {
+                requested = '';
+            }
+            if (requested) {
+                const target = filterChips.querySelector('.chip[data-category="' + requested + '"]');
+                if (target) {
+                    activeCategory = requested;
+                    filterChips.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === target));
+                }
+            }
+            runSearch();
+        })();
+    </script>
+    <script>
+        (function () {
+            'use strict';
+            if (document.documentElement.classList.contains('no-js')) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.body.classList.add('fx-off');
+                return;
+            }
 
-                    this.style.position = 'relative';
-                    this.style.overflow = 'hidden';
-                    this.appendChild(ripple);
+            const fineHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-                    anime({
-                        targets: ripple,
-                        scale: 2,
-                        opacity: 0,
-                        duration: 600,
-                        easing: 'easeOutCubic',
-                        complete: function() {
-                            ripple.remove();
-                        }
+            const canvas = document.getElementById('fx-field');
+            let gl = null;
+
+            const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+            window.addEventListener('pointermove', e => {
+                mouse.tx = (e.clientX / Math.max(window.innerWidth, 1)) * 2 - 1;
+                mouse.ty = (e.clientY / Math.max(window.innerHeight, 1)) * 2 - 1;
+            }, { passive: true });
+
+            let tick = 0;
+            let raf = null;
+            let last = 0;
+
+            /* ===== Nebulosa WebGL ===== */
+            const nebula = { on: false, buf: null, cnt: 0, arr: null, locs: {}, dpr: 1 };
+            const PAL = { cyan: [0.13, 0.89, 1], violet: [0.545, 0.36, 0.965], mag: [1, 0.18, 0.6] };
+            const VERT = 'attribute vec2 aPos;attribute float aZ;attribute float aSize;attribute float aMix;attribute float aSeed;uniform vec2 uRes;uniform vec2 uMse;uniform float uDpr;varying float vA;varying float vMix;void main(){vec2 p=aPos;p.x+=uMse.x*0.022*aZ*(aSeed*2.0-1.0);p.y+=uMse.y*0.022*aZ;vec2 c=vec2((p.x*2.0-1.0)*uRes.x/uRes.y,1.0-p.y*2.0);gl_Position=vec4(c,0.4-aZ*0.4,1.0);gl_PointSize=max(1.0,aSize*uDpr*(0.55+aZ));float cloud=step(40.0,aSize);vA=mix(0.16+aZ*0.5,0.05+aZ*0.22,cloud);vMix=aMix;}';
+            const FRAG = 'precision mediump float;uniform vec3 uC;uniform vec3 uV;uniform vec3 uM;varying float vA;varying float vMix;void main(){vec2 d=gl_PointCoord-0.5;float r=length(d);float f=pow(max(0.0,1.0-smoothstep(0.0,0.5,r)),2.0);vec3 c=vMix<0.5?mix(uC,uV,vMix*2.0):mix(uV,uM,(vMix-0.5)*2.0);gl_FragColor=vec4(c*1.9*f,vA);}';
+
+            function shader(type, src) {
+                const s = gl.createShader(type);
+                gl.shaderSource(s, src);
+                gl.compileShader(s);
+                if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s) || 'shader');
+                return s;
+            }
+
+            function makeParticles() {
+                const w = Math.max(1, canvas.width);
+                const h = Math.max(1, canvas.height);
+                const n = Math.max(24, Math.min(150, Math.round((w * h) / 8200)));
+                nebula.cnt = n;
+                const arr = new Float32Array(n * 6);
+                for (let i = 0; i < n; i++) {
+                    const o = i * 6;
+                    const x = Math.random();
+                    const cloud = Math.random() < 0.16;
+                    const size = cloud ? (34 + Math.random() * 62) : (2.2 + Math.random() * 7.6);
+                    const mix = Math.max(0, Math.min(1, (1 - x) * 1.05 + (Math.random() - 0.5) * 0.22));
+                    arr[o] = x;
+                    arr[o + 1] = Math.random() * 0.58;
+                    arr[o + 2] = Math.random();
+                    arr[o + 3] = size;
+                    arr[o + 4] = mix;
+                    arr[o + 5] = Math.random();
+                }
+                nebula.arr = arr;
+                gl.bindBuffer(gl.ARRAY_BUFFER, nebula.buf);
+                gl.bufferData(gl.ARRAY_BUFFER, arr, gl.DYNAMIC_DRAW);
+            }
+
+            function nebResize() {
+                if (!nebula.on || !gl) return;
+                const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+                const w = Math.max(1, Math.floor(window.innerWidth * dpr));
+                const h = Math.max(1, Math.floor(window.innerHeight * dpr));
+                if (canvas.width !== w || canvas.height !== h) {
+                    canvas.width = w;
+                    canvas.height = h;
+                    nebula.dpr = dpr;
+                    gl.viewport(0, 0, w, h);
+                    makeParticles();
+                }
+            }
+
+            function stepNebula(dt) {
+                nebResize();
+                const d = nebula.arr;
+                const k = dt * 60;
+                for (let i = 0; i < nebula.cnt; i++) {
+                    const o = i * 6;
+                    let x = d[o];
+                    const y = d[o + 1];
+                    const z = d[o + 2];
+                    const seed = d[o + 5];
+                    d[o] = x + Math.sin(tick * 0.4 + seed * 6.283) * 0.0032 * k;
+                    const vy = (0.0042 + z * 0.02) * k;
+                    if (y - vy < -0.03) {
+                        d[o] = Math.random();
+                        d[o + 1] = 1.03;
+                    } else {
+                        d[o + 1] = y - vy;
+                    }
+                }
+                gl.bindBuffer(gl.ARRAY_BUFFER, nebula.buf);
+                gl.bufferSubData(gl.ARRAY_BUFFER, 0, d);
+                const L = nebula.locs;
+                gl.uniform2f(L.uRes, canvas.width, canvas.height);
+                gl.uniform2f(L.uMse, mouse.x, mouse.y);
+                gl.uniform1f(L.uDpr, nebula.dpr);
+                gl.uniform3f(L.uC, PAL.cyan[0], PAL.cyan[1], PAL.cyan[2]);
+                gl.uniform3f(L.uV, PAL.violet[0], PAL.violet[1], PAL.violet[2]);
+                gl.uniform3f(L.uM, PAL.mag[0], PAL.mag[1], PAL.mag[2]);
+                gl.drawArrays(gl.POINTS, 0, nebula.cnt);
+            }
+
+            function acquire() {
+                try {
+                    return canvas && (canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, stencil: false }) || canvas.getContext('experimental-webgl')) || null;
+                } catch (e) { return null; }
+            }
+
+            let bootTries = 0;
+
+            function boot() {
+                gl = acquire();
+                if (!gl) {
+                    if (bootTries++ < 120) {
+                        setTimeout(boot, 100);
+                        return;
+                    }
+                    document.body.classList.add('fx-off');
+                    return;
+                }
+                document.body.classList.add('fx-on');
+                try {
+                    const prg = gl.createProgram();
+                    gl.attachShader(prg, shader(gl.VERTEX_SHADER, VERT));
+                    gl.attachShader(prg, shader(gl.FRAGMENT_SHADER, FRAG));
+                    gl.linkProgram(prg);
+                    if (!gl.getProgramParameter(prg, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prg));
+                    gl.useProgram(prg);
+                    nebula.buf = gl.createBuffer();
+                    nebula.locs = {
+                        aPos: gl.getAttribLocation(prg, 'aPos'),
+                        aZ: gl.getAttribLocation(prg, 'aZ'),
+                        aSize: gl.getAttribLocation(prg, 'aSize'),
+                        aMix: gl.getAttribLocation(prg, 'aMix'),
+                        aSeed: gl.getAttribLocation(prg, 'aSeed'),
+                        uRes: gl.getUniformLocation(prg, 'uRes'),
+                        uMse: gl.getUniformLocation(prg, 'uMse'),
+                        uDpr: gl.getUniformLocation(prg, 'uDpr'),
+                        uC: gl.getUniformLocation(prg, 'uC'),
+                        uV: gl.getUniformLocation(prg, 'uV'),
+                        uM: gl.getUniformLocation(prg, 'uM')
+                    };
+                    const stride = 6 * 4;
+                    gl.bindBuffer(gl.ARRAY_BUFFER, nebula.buf);
+                    gl.enableVertexAttribArray(nebula.locs.aPos);
+                    gl.vertexAttribPointer(nebula.locs.aPos, 2, gl.FLOAT, false, stride, 0);
+                    gl.enableVertexAttribArray(nebula.locs.aZ);
+                    gl.vertexAttribPointer(nebula.locs.aZ, 1, gl.FLOAT, false, stride, 8);
+                    gl.enableVertexAttribArray(nebula.locs.aSize);
+                    gl.vertexAttribPointer(nebula.locs.aSize, 1, gl.FLOAT, false, stride, 12);
+                    gl.enableVertexAttribArray(nebula.locs.aMix);
+                    gl.vertexAttribPointer(nebula.locs.aMix, 1, gl.FLOAT, false, stride, 16);
+                    gl.enableVertexAttribArray(nebula.locs.aSeed);
+                    gl.vertexAttribPointer(nebula.locs.aSeed, 1, gl.FLOAT, false, stride, 20);
+                    gl.enable(gl.BLEND);
+                    gl.blendFunc(gl.ONE, gl.ONE);
+                    gl.disable(gl.DEPTH_TEST);
+                    nebula.on = true;
+                    nebResize();
+                    window.addEventListener('resize', nebResize);
+                } catch (e) {
+                    nebula.on = false;
+                }
+                if (nebula.on) {
+                    document.body.classList.remove('fx-off');
+                } else {
+                    document.body.classList.remove('fx-on');
+                    document.body.classList.add('fx-off');
+                }
+            }
+
+            boot();
+            setTimeout(() => {
+                if (!nebula.on && gl === null) boot();
+            }, 5000);
+
+            /* ===== Tilt 3D + glare ===== */
+            const tilt = { items: [] };
+            if (fineHover) {
+                document.querySelectorAll('.tpl, .strip-card').forEach(card => {
+                    const glare = document.createElement('span');
+                    glare.className = 'tpl-glare';
+                    glare.setAttribute('aria-hidden', 'true');
+                    card.appendChild(glare);
+                    const m = { el: card, hover: false, rx: 0, ry: 0, lift: 0, tx: 0.5, ty: 0.5 };
+                    card.addEventListener('pointerenter', () => {
+                        m.hover = true;
+                        card.style.willChange = 'transform';
                     });
+                    card.addEventListener('pointerleave', () => {
+                        m.hover = false;
+                        setTimeout(() => { if (!m.hover) card.style.willChange = ''; }, 320);
+                    });
+                    card.addEventListener('pointermove', e => {
+                        const r = card.getBoundingClientRect();
+                        m.tx = (e.clientX - r.left) / Math.max(r.width, 1);
+                        m.ty = (e.clientY - r.top) / Math.max(r.height, 1);
+                    });
+                    tilt.items.push(m);
                 });
+            }
+
+            function stepTilt() {
+                let any = false;
+                for (const m of tilt.items) {
+                    const rxt = m.hover ? (m.ty - 0.5) * 9 : 0;
+                    const ryt = m.hover ? (m.tx - 0.5) * 9 : 0;
+                    m.rx += (rxt - m.rx) * 0.14;
+                    m.ry += (ryt - m.ry) * 0.14;
+                    m.lift += ((m.hover ? -6 : 0) - m.lift) * 0.14;
+                    const live = Math.abs(m.rx) > 0.02 || Math.abs(m.ry) > 0.02 || Math.abs(m.lift) > 0.02 || m.hover;
+                    if (live) {
+                        m.el.style.transform = 'perspective(900px) translateY(' + m.lift.toFixed(2) + 'px) rotateX(' + m.rx.toFixed(2) + 'deg) rotateY(' + m.ry.toFixed(2) + 'deg)';
+                        m.el.style.setProperty('--gx', (m.tx * 100).toFixed(1) + '%');
+                        m.el.style.setProperty('--gy', (m.ty * 100).toFixed(1) + '%');
+                        any = true;
+                    } else if (m.el.style.transform) {
+                        m.el.style.transform = '';
+                        m.el.style.removeProperty('--gx');
+                        m.el.style.removeProperty('--gy');
+                    }
+                }
+            }
+
+            /* ===== Botones magnéticos ===== */
+            const mag = { items: [] };
+            if (fineHover) {
+                document.querySelectorAll('.hero-actions .btn, #navbar .nav-cta, .whatsapp-btn').forEach(el => {
+                    const m = { el, x: 0, y: 0, tx: 0, ty: 0 };
+                    el.addEventListener('pointerenter', () => { m.hover = true; });
+                    el.addEventListener('pointerleave', () => { m.hover = false; m.tx = 0; m.ty = 0; });
+                    el.addEventListener('pointermove', e => {
+                        const r = el.getBoundingClientRect();
+                        const dx = e.clientX - (r.left + r.width / 2);
+                        const dy = e.clientY - (r.top + r.height / 2);
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        const k = dist < 130 ? (1 - dist / 130) * 0.32 : 0;
+                        m.tx = dx * k;
+                        m.ty = dy * k;
+                    });
+                    mag.items.push(m);
+                });
+            }
+
+            function stepMag() {
+                for (const m of mag.items) {
+                    m.x += (m.tx - m.x) * 0.16;
+                    m.y += (m.ty - m.y) * 0.16;
+                    if (Math.abs(m.x) > 0.2 || Math.abs(m.y) > 0.2) {
+                        m.el.style.transform = 'translate3d(' + m.x.toFixed(1) + 'px,' + m.y.toFixed(1) + 'px,0)';
+                    } else if (m.el.style.transform) {
+                        m.el.style.transform = '';
+                    }
+                }
+            }
+
+            /* ===== Parallax de scroll ===== */
+            const prlx = { els: [] };
+            document.querySelectorAll('.hero-title, .hero-rule, .hero-proof, .hero-strip-wrap, .gallery-hero h1, .gallery-hero p').forEach(el => {
+                let k = 0.07;
+                if (el.classList.contains('hero-title')) k = 0.12;
+                else if (el.classList.contains('hero-rule')) k = 0.06;
+                else if (el.classList.contains('hero-strip-wrap')) k = 0.045;
+                else if (el.classList.contains('hero-proof')) k = 0.09;
+                prlx.els.push({ el, k });
             });
-        });
+
+            function stepParlx() {
+                const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+                for (const p of prlx.els) {
+                    const off = y * p.k;
+                    if (Math.abs(off) > 0.5) {
+                        p.el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)';
+                    } else if (p.el.style.transform) {
+                        p.el.style.transform = '';
+                    }
+                }
+            }
+
+            /* ===== Bucle ===== */
+            function frame(now) {
+                if (!last) last = now;
+                const dt = Math.min(0.05, (now - last) / 1000);
+                last = now;
+                tick += dt;
+                mouse.x += (mouse.tx - mouse.x) * 0.05;
+                mouse.y += (mouse.ty - mouse.y) * 0.05;
+                if (nebula.on) stepNebula(dt);
+                if (tilt.items.length) stepTilt();
+                if (mag.items.length) stepMag();
+                if (prlx.els.length) stepParlx();
+                raf = requestAnimationFrame(frame);
+            }
+
+            raf = requestAnimationFrame(frame);
+        })();
     </script>
 </body>
 
