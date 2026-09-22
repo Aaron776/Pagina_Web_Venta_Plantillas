@@ -2226,74 +2226,93 @@
                 return s;
             }
 
-            function makeParticles() {
-                const w = Math.max(1, canvas.width);
-                const h = Math.max(1, canvas.height);
-                const n = Math.max(24, Math.min(150, Math.round((w * h) / 8200)));
-                nebula.cnt = n;
-                const arr = new Float32Array(n * 6);
-                for (let i = 0; i < n; i++) {
-                    const o = i * 6;
-                    const x = Math.random();
-                    const cloud = Math.random() < 0.16;
-                    const size = cloud ? (34 + Math.random() * 62) : (2.2 + Math.random() * 7.6);
-                    const mix = Math.max(0, Math.min(1, (1 - x) * 1.05 + (Math.random() - 0.5) * 0.22));
-                    arr[o] = x;
-                    arr[o + 1] = Math.random() * 0.58;
-                    arr[o + 2] = Math.random();
-                    arr[o + 3] = size;
-                    arr[o + 4] = mix;
-                    arr[o + 5] = Math.random();
+function makeParticles() {
+            const w = Math.max(1, canvas.width);
+            const h = Math.max(1, canvas.height);
+            const n = Math.max(48, Math.min(360, Math.round((w * h) / 4300)));
+            nebula.cnt = n;
+            const arr = new Float32Array(n * 6);
+            const base = new Float32Array(n * 3);
+            for (let i = 0; i < n; i++) {
+                const o = i * 6;
+                const b = i * 3;
+                const arm = Math.random() < 0.5 ? 0 : 1;
+                const r = Math.pow(Math.random(), 0.85);
+                let size = 0;
+                let tight = true;
+                if (r < 0.16) {
+                    size = 26 + Math.random() * 60;
+                } else if (r < 0.8 && Math.random() < 0.2) {
+                    size = 10 + Math.random() * 22;
+                } else {
+                    size = 1.1 + Math.random() * 3.4;
+                    tight = Math.random() < 0.6;
                 }
-                nebula.arr = arr;
-                gl.bindBuffer(gl.ARRAY_BUFFER, nebula.buf);
-                gl.bufferData(gl.ARRAY_BUFFER, arr, gl.DYNAMIC_DRAW);
+                const a0 = arm * Math.PI + r * 6.5 + (Math.random() - 0.5) * (tight ? 0.18 : (0.4 + r * 0.6));
+                const mix = Math.max(0, Math.min(1, (1 - r) * 1.35 + (Math.random() - 0.5) * 0.18));
+                base[b] = r;
+                base[b + 1] = a0;
+                base[b + 2] = size;
+                arr[o] = r;
+                arr[o + 1] = a0;
+                arr[o + 2] = Math.random();
+                arr[o + 3] = size;
+                arr[o + 4] = mix;
+                arr[o + 5] = Math.random();
             }
+            nebula.base = base;
+            nebula.arr = arr;
+            gl.bindBuffer(gl.ARRAY_BUFFER, nebula.buf);
+            gl.bufferData(gl.ARRAY_BUFFER, arr, gl.DYNAMIC_DRAW);
+        }
 
-            function nebResize() {
-                if (!nebula.on || !gl) return;
-                const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-                const w = Math.max(1, Math.floor(window.innerWidth * dpr));
-                const h = Math.max(1, Math.floor(window.innerHeight * dpr));
-                if (canvas.width !== w || canvas.height !== h) {
-                    canvas.width = w;
-                    canvas.height = h;
-                    nebula.dpr = dpr;
-                    gl.viewport(0, 0, w, h);
-                    makeParticles();
-                }
+        function nebResize() {
+            if (!nebula.on || !gl) return;
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+            const w = Math.max(1, Math.floor(window.innerWidth * dpr));
+            const h = Math.max(1, Math.floor(window.innerHeight * dpr));
+            if (canvas.width !== w || canvas.height !== h) {
+                canvas.width = w;
+                canvas.height = h;
+                nebula.dpr = dpr;
+                gl.viewport(0, 0, w, h);
+                makeParticles();
             }
+        }
 
-            function stepNebula(dt) {
-                nebResize();
-                const d = nebula.arr;
-                const k = dt * 60;
-                for (let i = 0; i < nebula.cnt; i++) {
-                    const o = i * 6;
-                    let x = d[o];
-                    const y = d[o + 1];
-                    const z = d[o + 2];
-                    const seed = d[o + 5];
-                    d[o] = x + Math.sin(tick * 0.4 + seed * 6.283) * 0.0032 * k;
-                    const vy = (0.0042 + z * 0.02) * k;
-                    if (y - vy < -0.03) {
-                        d[o] = Math.random();
-                        d[o + 1] = 1.03;
-                    } else {
-                        d[o + 1] = y - vy;
-                    }
-                }
-                gl.bindBuffer(gl.ARRAY_BUFFER, nebula.buf);
-                gl.bufferSubData(gl.ARRAY_BUFFER, 0, d);
-                const L = nebula.locs;
-                gl.uniform2f(L.uRes, canvas.width, canvas.height);
-                gl.uniform2f(L.uMse, mouse.x, mouse.y);
-                gl.uniform1f(L.uDpr, nebula.dpr);
-                gl.uniform3f(L.uC, PAL.cyan[0], PAL.cyan[1], PAL.cyan[2]);
-                gl.uniform3f(L.uV, PAL.violet[0], PAL.violet[1], PAL.violet[2]);
-                gl.uniform3f(L.uM, PAL.mag[0], PAL.mag[1], PAL.mag[2]);
-                gl.drawArrays(gl.POINTS, 0, nebula.cnt);
+        function stepNebula(dt) {
+            nebResize();
+            const d = nebula.arr;
+            const base = nebula.base;
+            const t = tick;
+            const CX = 0.5;
+            const CY = 0.44;
+            for (let i = 0; i < nebula.cnt; i++) {
+                const o = i * 6;
+                const b = i * 3;
+                const r = base[b];
+                const a0 = base[b + 1];
+                const s0 = base[b + 2];
+                const seed = d[o + 5];
+                const omega = 0.016 + (1 - r) * 0.06;
+                const a = a0 + t * omega;
+                d[o] = CX + Math.cos(a) * r * 0.5;
+                d[o + 1] = CY + Math.sin(a) * r * 0.5;
+                d[o + 3] = s0 >= 14
+                    ? s0 * (0.86 + 0.14 * Math.sin(t * 1.1 + seed * 7.1))
+                    : s0 * (0.7 + 0.3 * Math.sin(t * 2.6 + seed * 11.3));
             }
+            gl.bindBuffer(gl.ARRAY_BUFFER, nebula.buf);
+            gl.bufferSubData(gl.ARRAY_BUFFER, 0, d);
+            const L = nebula.locs;
+            gl.uniform2f(L.uRes, canvas.width, canvas.height);
+            gl.uniform2f(L.uMse, mouse.x, mouse.y);
+            gl.uniform1f(L.uDpr, nebula.dpr);
+            gl.uniform3f(L.uC, PAL.cyan[0], PAL.cyan[1], PAL.cyan[2]);
+            gl.uniform3f(L.uV, PAL.violet[0], PAL.violet[1], PAL.violet[2]);
+            gl.uniform3f(L.uM, PAL.mag[0], PAL.mag[1], PAL.mag[2]);
+            gl.drawArrays(gl.POINTS, 0, nebula.cnt);
+        }
 
             function acquire() {
                 try {
