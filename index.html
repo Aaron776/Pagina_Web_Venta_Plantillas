@@ -1603,6 +1603,46 @@
             background: radial-gradient(ellipse 92% 80% at 50% 24%, rgba(6, 7, 17, .58), rgba(6, 7, 17, 0) 72%);
         }
 
+        html.cur-on,
+        html.cur-on * {
+            cursor: none !important;
+        }
+
+        .fx-cursor-comet {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            margin: -12px 0 0 -12px;
+            z-index: 9999;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            will-change: transform;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            background: linear-gradient(135deg, #ffffff, #0ef 55%, #7c4dff);
+            box-shadow: 0 0 14px rgba(0, 229, 255, 0.8), 0 0 30px rgba(124, 77, 255, 0.5);
+            transition: background .2s var(--ease), box-shadow .2s var(--ease);
+        }
+
+        .fx-cursor-comet.hov {
+            background: linear-gradient(135deg, #ffffff, #ff1c93 60%, #ffd2ec);
+            box-shadow: 0 0 18px rgba(255, 28, 147, 0.8), 0 0 36px rgba(255, 28, 147, 0.5);
+        }
+
+        .fx-cursor-p {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9996;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            will-change: transform, opacity;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffffff, #0ef 40%, rgba(0, 229, 255, 0));
+            box-shadow: 0 0 6px rgba(0, 229, 255, 0.9);
+        }
+
         body.fx-on .hex-orbs {
             display: none;
         }
@@ -2208,6 +2248,74 @@
                 mouse.ty = (e.clientY / Math.max(window.innerHeight, 1)) * 2 - 1;
             }, { passive: true });
 
+            /* ===== Cursor personalizado ===== */
+            const cur = { on: fineHover, head: null, px: 0, py: 0, hx: 0, hy: 0, ax: 0, ay: 0, ang: 0, hover: false, press: 0, pressT: 0, trail: [] };
+            if (cur.on) {
+                document.documentElement.classList.add('cur-on');
+                const h = document.createElement('div');
+                h.className = 'fx-cursor-comet';
+                document.body.appendChild(h);
+                cur.head = h;
+                cur.px = cur.hx = cur.ax = window.innerWidth / 2;
+                cur.py = cur.hy = cur.ay = window.innerHeight / 2;
+                const INTERACT = 'a, button, input, textarea, select, .tpl-card, .chip, .to-chat, [data-mag], label';
+                window.addEventListener('pointermove', e => {
+                    cur.ax = cur.px;
+                    cur.ay = cur.py;
+                    cur.px = e.clientX;
+                    cur.py = e.clientY;
+                    const t = e.target && e.target.closest ? e.target.closest(INTERACT) : null;
+                    cur.hover = !!t;
+                    cur.head.classList.toggle('hov', cur.hover);
+                }, { passive: true });
+                window.addEventListener('pointerdown', () => { cur.pressT = 1; }, { passive: true });
+                window.addEventListener('pointerup', () => { cur.pressT = 0; }, { passive: true });
+                document.documentElement.addEventListener('pointerleave', () => {
+                    cur.px = cur.py = cur.hx = cur.hy = -400;
+                }, { passive: true });
+            }
+
+            function spawnTrail(x, y) {
+                if (cur.trail.length >= 42) return;
+                const p = document.createElement('div');
+                p.className = 'fx-cursor-p';
+                const s = 3 + Math.random() * 4;
+                p.style.width = s + 'px';
+                p.style.height = s + 'px';
+                p.style.margin = (-s / 2) + 'px 0 0 ' + (-s / 2) + 'px';
+                document.body.appendChild(p);
+                cur.trail.push({ el: p, x: x, y: y, vx: (Math.random() - 0.5) * 46, vy: (Math.random() - 0.5) * 46, life: 1, s: s });
+            }
+
+            function stepCur(dt) {
+                if (!cur.on || !cur.head) return;
+                cur.press += (cur.pressT - cur.press) * Math.min(1, dt * 12);
+                const dx = cur.px - cur.ax;
+                const dy = cur.py - cur.ay;
+                const moved = Math.hypot(cur.px - cur.hx, cur.py - cur.hy);
+                if (moved > 0.4) cur.ang = Math.atan2(dy, dx);
+                const bx = cur.hx;
+                const by = cur.hy;
+                cur.hx += (cur.px - cur.hx) * Math.min(1, dt * 10);
+                cur.hy += (cur.py - cur.hy) * Math.min(1, dt * 10);
+                if (moved > 2.5) spawnTrail(bx, by);
+                for (let i = cur.trail.length - 1; i >= 0; i--) {
+                    const t = cur.trail[i];
+                    t.life -= dt * 1.7;
+                    if (t.life <= 0) {
+                        t.el.remove();
+                        cur.trail.splice(i, 1);
+                        continue;
+                    }
+                    t.x += t.vx * dt;
+                    t.y += t.vy * dt;
+                    t.el.style.transform = 'translate3d(' + t.x.toFixed(1) + 'px,' + t.y.toFixed(1) + 'px,0) scale(' + t.life.toFixed(3) + ')';
+                    t.el.style.opacity = (t.life * 0.85).toFixed(3);
+                }
+                const os = (cur.hover ? 1.35 : 1) * (1 - 0.2 * cur.press);
+                cur.head.style.transform = 'translate3d(' + cur.hx.toFixed(1) + 'px,' + cur.hy.toFixed(1) + 'px,0) rotate(' + (cur.ang * 180 / Math.PI).toFixed(1) + 'deg) scale(' + os.toFixed(3) + ')';
+            }
+
             let tick = 0;
             let raf = null;
             let last = 0;
@@ -2503,6 +2611,7 @@ function makeParticles() {
                 if (tilt.items.length) stepTilt();
                 if (mag.items.length) stepMag();
                 if (prlx.els.length) stepParlx();
+                if (cur.on) stepCur(dt);
                 raf = requestAnimationFrame(frame);
             }
 
