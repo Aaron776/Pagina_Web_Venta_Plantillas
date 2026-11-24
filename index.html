@@ -15,6 +15,233 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ===== Intro Three.js Solar System ===== */
+        .intro {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: radial-gradient(ellipse at 50% 40%, #0b1220 0%, #03050b 55%, #000 100%);
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .no-js .intro { display: none; }
+
+        .intro::before,
+        .intro::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .intro::before {
+            background:
+                radial-gradient(circle at 50% 45%, rgba(255, 176, 72, .08), transparent 28%),
+                radial-gradient(circle at 20% 20%, rgba(87, 140, 255, .08), transparent 22%),
+                linear-gradient(180deg, rgba(2, 6, 18, .15), rgba(0, 0, 0, .05) 35%, rgba(0, 0, 0, .55));
+            z-index: 1;
+        }
+
+        .intro::after {
+            background: radial-gradient(ellipse 90% 55% at 50% 110%, rgba(0, 0, 0, .95) 20%, transparent 72%);
+            z-index: 1;
+        }
+
+        .intro-enter {
+            position: absolute;
+            top: max(24px, env(safe-area-inset-top));
+            right: 24px;
+            z-index: 3;
+            padding: 12px 20px;
+            border: 1px solid rgba(148, 177, 214, .28);
+            border-radius: 999px;
+            background: rgba(10, 18, 30, .52);
+            color: #edf4ff;
+            font: 600 .82rem/1 var(--sans);
+            letter-spacing: .04em;
+            cursor: pointer;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 10px 30px rgba(0, 0, 0, .28);
+            transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+        }
+        .intro-enter:hover { background: rgba(24, 38, 60, .72); border-color: rgba(176, 210, 255, .45); transform: translateY(-1px); }
+        .intro-enter:focus-visible { outline: 2px solid rgba(142, 198, 255, .85); outline-offset: 3px; }
+
+        .intro-caption {
+            position: absolute;
+            top: max(30px, calc(env(safe-area-inset-top) + 16px));
+            left: 32px;
+            z-index: 3;
+            color: rgba(198, 214, 235, .82);
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+        }
+        .intro-caption::before {
+            content: "";
+            display: block;
+            width: 36px;
+            height: 1px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, rgba(148, 200, 255, .9), transparent);
+        }
+
+        .intro-credit {
+            position: absolute;
+            left: 24px;
+            bottom: 14px;
+            z-index: 3;
+            font-size: 10px;
+            letter-spacing: .03em;
+            color: rgba(163, 179, 201, .62);
+        }
+
+        .intro-planet-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            padding: 4px 8px;
+            border-radius: 999px;
+            color: rgba(219, 230, 245, .88);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .12em;
+            background: rgba(8, 14, 24, .28);
+            border: 1px solid rgba(143, 170, 204, .12);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            text-shadow: 0 1px 10px rgba(0, 0, 0, .55);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        #solarCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        #solarCanvas.ready { opacity: 1; }
+
+        .intro-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            gap: .85rem;
+            padding: 0 24px clamp(2.2rem, 8vh, 4.8rem);
+            pointer-events: none;
+            text-align: center;
+        }
+
+        .intro-logo-badge {
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+            padding: 10px 16px 10px 10px;
+            border-radius: 20px;
+            background: rgba(8, 14, 25, .26);
+            border: 1px solid rgba(149, 178, 214, .14);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            animation: introFadeUp 1.6s var(--ease) .45s both;
+        }
+
+        .intro-logo-icon {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #f6fbff 0%, #87dfff 45%, #6f8bff 100%);
+            color: #08111f;
+            font-size: 1.35rem;
+            box-shadow: 0 12px 35px rgba(103, 168, 255, .35);
+        }
+
+        .intro-logo-text {
+            font-family: var(--display);
+            font-weight: 800;
+            font-size: clamp(1.9rem, 5vw, 3.3rem);
+            letter-spacing: -.03em;
+            line-height: .95;
+            color: #f4f8ff;
+            text-shadow: 0 10px 40px rgba(0, 0, 0, .4);
+        }
+
+        .intro-logo-text span {
+            color: #9cc0ff;
+            background: linear-gradient(90deg, #b8dcff, #7ea7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .intro-subtitle {
+            color: rgba(188, 204, 226, .72);
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            font-size: .68rem;
+            font-weight: 600;
+            animation: introFadeUp 1.6s var(--ease) .75s both;
+        }
+
+        @media (max-width: 600px) {
+            .intro-caption { left: 20px; top: max(24px, calc(env(safe-area-inset-top) + 12px)); max-width: 140px; font-size: .64rem; letter-spacing: .18em; }
+            .intro-enter { right: 16px; top: max(16px, env(safe-area-inset-top)); padding: 10px 14px; font-size: .76rem; }
+            .intro-logo-badge { gap: .7rem; padding: 8px 14px 8px 8px; border-radius: 16px; }
+            .intro-logo-icon { width: 44px; height: 44px; border-radius: 12px; font-size: 1.15rem; }
+            .intro .intro-subtitle { letter-spacing: .18em; font-size: .62rem; }
+            .intro .intro-overlay { padding: 0 20px calc(74px + env(safe-area-inset-bottom)); }
+            .intro-credit { left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom)); font-size: 9px; text-align: center; }
+            .intro-planet-label { font-size: 9px; letter-spacing: .08em; padding: 3px 6px; }
+        }
+
+        @keyframes introFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro.out {
+            animation: introFadeOut 1.2s var(--ease) forwards;
+            pointer-events: none;
+        }
+
+        @keyframes introFadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro-logo-badge,
+            .intro-subtitle {
+                animation: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+
         /* ===== Tokens ===== */
         :root {
             --bg: #060711;
@@ -1584,6 +1811,114 @@
             transform: none;
         }
 
+        /* ===== 3D Entrance Animations ===== */
+        .js .hero-title,
+        .js .hero-lead,
+        .js .hero-proof,
+        .js .hero-actions .btn {
+            opacity: 0;
+            transform: perspective(1200px) rotateX(-14deg) translateY(40px) translateZ(-60px);
+            will-change: transform, opacity;
+        }
+
+        .js .hero.in .hero-title {
+            animation: hero3dIn 1s var(--ease) .1s forwards;
+        }
+
+        .js .hero.in .hero-lead {
+            animation: hero3dIn 1s var(--ease) .25s forwards;
+        }
+
+        .js .hero.in .hero-proof {
+            animation: hero3dIn 1s var(--ease) .4s forwards;
+        }
+
+        .js .hero.in .hero-actions .btn:nth-child(1) {
+            animation: hero3dIn 1s var(--ease) .55s forwards;
+        }
+
+        .js .hero.in .hero-actions .btn:nth-child(2) {
+            animation: hero3dIn 1s var(--ease) .7s forwards;
+        }
+
+        @keyframes hero3dIn {
+            from {
+                opacity: 0;
+                transform: perspective(1200px) rotateX(-14deg) translateY(40px) translateZ(-60px);
+            }
+
+            to {
+                opacity: 1;
+                transform: perspective(1200px) rotateX(0deg) translateY(0) translateZ(0);
+            }
+        }
+
+        .js .strip-item {
+            opacity: 0;
+            transform: perspective(1000px) rotateX(12deg) translateY(50px) translateZ(-30px);
+        }
+
+        .js .hero.in .strip-item:nth-child(1) {
+            animation: strip3dIn .9s var(--ease) .85s forwards;
+        }
+
+        .js .hero.in .strip-item:nth-child(2) {
+            animation: strip3dIn .9s var(--ease) .95s forwards;
+        }
+
+        .js .hero.in .strip-item:nth-child(3) {
+            animation: strip3dIn .9s var(--ease) 1.05s forwards;
+        }
+
+        .js .hero.in .strip-item:nth-child(4) {
+            animation: strip3dIn .9s var(--ease) 1.15s forwards;
+        }
+
+        @keyframes strip3dIn {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) rotateX(12deg) translateY(50px) translateZ(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: perspective(1000px) rotateX(0deg) translateY(0) translateZ(0);
+            }
+        }
+
+        .js .reveal {
+            opacity: 0;
+            transform: perspective(1000px) rotateX(6deg) translateY(35px) translateZ(-25px);
+        }
+
+        .js .reveal.in {
+            animation: card3dIn .8s var(--ease) forwards;
+        }
+
+        @keyframes card3dIn {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) rotateX(6deg) translateY(35px) translateZ(-25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: perspective(1000px) rotateX(0deg) translateY(0) translateZ(0);
+            }
+        }
+
+        .js .reveal:nth-child(2) {
+            animation-delay: .1s;
+        }
+
+        .js .reveal:nth-child(3) {
+            animation-delay: .2s;
+        }
+
+        .js .reveal:nth-child(4) {
+            animation-delay: .3s;
+        }
+
         /* ===== HOLOGRAPHIC FX ===== */
         .fx-field {
             position: fixed;
@@ -1678,10 +2013,25 @@
             }
 
             .js .sec-head,
-            .js .sec-head.in {
-                opacity: 1;
-                transform: none;
-                transition: none;
+            .js .sec-head.in,
+            .js .hero-title,
+            .js .hero-lead,
+            .js .hero-proof,
+            .js .hero-actions .btn,
+            .js .strip-item,
+            .js .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .js .hero.in .hero-title,
+            .js .hero.in .hero-lead,
+            .js .hero.in .hero-proof,
+            .js .hero.in .hero-actions .btn,
+            .js .hero.in .strip-item {
+                animation: none !important;
             }
 
             .sec-head::before {
@@ -1716,6 +2066,19 @@
 </head>
 
 <body>
+    <div class="intro" id="intro">
+        <canvas id="solarCanvas" aria-label="Sistema solar tridimensional con planetas texturizados"></canvas>
+        <div class="intro-caption">Bienvenido a nuestro universo</div>
+        <button class="intro-enter" id="introEnter" type="button">Entrar al sitio →</button>
+        <div class="intro-credit">Texturas: Solar System Scope · CC BY 4.0 · Escala ilustrativa</div>
+        <div class="intro-overlay">
+            <div class="intro-logo-badge">
+                <div class="intro-logo-icon"><i class="fas fa-code"></i></div>
+                <div class="intro-logo-text">WebCraft <span>Ecuador</span></div>
+            </div>
+            <div class="intro-subtitle">PLANTILLAS WEB • SITIOS A MEDIDA</div>
+        </div>
+    </div>
     <a class="skip" href="#inicio">Saltar al contenido</a>
 
     <nav class="navbar" id="navbar">
@@ -1737,7 +2100,7 @@
         </div>
     </nav>
 
-    <header class="hero" id="inicio">
+    <header class="hero in" id="inicio">
         <div class="hero-field">
             <i class="orb orb-a" aria-hidden="true"></i>
             <i class="orb orb-b" aria-hidden="true"></i>
@@ -2173,6 +2536,293 @@
     </a>
 
     <script>document.documentElement.classList.replace('no-js', 'js');</script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script>
+        // Independent exit: the site remains reachable even if the 3D CDN fails.
+        window.closeSolarIntro = function () {
+            const intro = document.getElementById('intro');
+            if (!intro || intro.classList.contains('out')) return;
+            intro.dispatchEvent(new Event('solar-close'));
+            intro.classList.add('out');
+            setTimeout(() => intro.remove(), 1200);
+        };
+        document.getElementById('introEnter').addEventListener('click', window.closeSolarIntro);
+        setTimeout(window.closeSolarIntro, 18000);
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+        (function () {
+            const intro = document.getElementById('intro');
+            const canvas = document.getElementById('solarCanvas');
+            if (!intro || !canvas || intro.classList.contains('out')) return;
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion) {
+                intro.classList.add('out');
+                setTimeout(() => intro.remove(), 400);
+                return;
+            }
+
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x02040a, 0.00055);
+
+            const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 6000);
+            const cameraDistance = () => Math.max(320, 165 / Math.tan(THREE.MathUtils.degToRad(24)) / camera.aspect);
+            camera.position.set(0, cameraDistance() * .48, cameraDistance() * .86);
+            camera.lookAt(0, 0, 0);
+
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.05;
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+            const composer = new EffectComposer(renderer);
+            composer.addPass(new RenderPass(scene, camera));
+            const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.45, 0.7, 0.92);
+            bloomPass.threshold = 0.92;
+            bloomPass.strength = 0.42;
+            bloomPass.radius = 0.55;
+            composer.addPass(bloomPass);
+            composer.addPass(new OutputPass());
+
+            const textureLoader = new THREE.TextureLoader();
+            const textures = [];
+            const textureJobs = [];
+            function surface(name, material) {
+                const url = location.protocol === 'file:'
+                    ? 'https://www.solarsystemscope.com/textures/download/2k_' + name + '.jpg'
+                    : 'img/solar/' + name + '.jpg';
+                textureJobs.push(textureLoader.loadAsync(url).then(texture => {
+                    if (stopped) { texture.dispose(); return; }
+                    texture.colorSpace = THREE.SRGBColorSpace;
+                    texture.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+                    textures.push(texture);
+                    material.map = texture;
+                    material.color.set(0xffffff);
+                    material.needsUpdate = true;
+                }).catch(() => {}));
+            }
+
+            const starGeo = new THREE.BufferGeometry();
+            const starCount = 4200;
+            const positions = new Float32Array(starCount * 3);
+            const colors = new Float32Array(starCount * 3);
+            for (let i = 0; i < starCount; i++) {
+                const i3 = i * 3;
+                const radius = 900 + Math.random() * 1400;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+                positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                positions[i3 + 2] = radius * Math.cos(phi);
+                const warm = Math.random();
+                const r = 0.75 + warm * 0.25;
+                const g = 0.78 + warm * 0.18;
+                const b = 0.92 + (1 - warm) * 0.08;
+                colors[i3] = r;
+                colors[i3 + 1] = g;
+                colors[i3 + 2] = b;
+            }
+            starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            starGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            const starMat = new THREE.PointsMaterial({ size: 1.15, vertexColors: true, transparent: true, opacity: 0.72, sizeAttenuation: false, depthWrite: false });
+            const stars = new THREE.Points(starGeo, starMat);
+            scene.add(stars);
+
+            const dustGeo = new THREE.BufferGeometry();
+            const dustCount = 1800;
+            const dustPos = new Float32Array(dustCount * 3);
+            for (let i = 0; i < dustCount; i++) {
+                const i3 = i * 3;
+                const a = Math.random() * Math.PI * 2;
+                const r = 120 + Math.random() * 520;
+                dustPos[i3] = Math.cos(a) * r;
+                dustPos[i3 + 1] = (Math.random() - .5) * 35;
+                dustPos[i3 + 2] = Math.sin(a) * r;
+            }
+            dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+            const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ color: 0x8fb4ff, size: 0.8, transparent: true, opacity: 0.08, sizeAttenuation: false, depthWrite: false }));
+            scene.add(dust);
+
+            const sunGroup = new THREE.Group();
+            scene.add(sunGroup);
+
+            const sunGeo = new THREE.SphereGeometry(14, 64, 64);
+            const sunMat = new THREE.MeshBasicMaterial({ color: 0xfff1bf });
+            surface('sun', sunMat);
+            const sun = new THREE.Mesh(sunGeo, sunMat);
+            sunGroup.add(sun);
+
+            const glowCanvas = document.createElement('canvas');
+            glowCanvas.width = glowCanvas.height = 256;
+            const gc = glowCanvas.getContext('2d');
+            const gradient = gc.createRadialGradient(128, 128, 20, 128, 128, 128);
+            gradient.addColorStop(0, 'rgba(255,244,214,.95)');
+            gradient.addColorStop(.18, 'rgba(255,190,92,.55)');
+            gradient.addColorStop(.45, 'rgba(255,122,34,.16)');
+            gradient.addColorStop(1, 'rgba(255,90,12,0)');
+            gc.fillStyle = gradient;
+            gc.fillRect(0, 0, 256, 256);
+            const glowTexture = new THREE.CanvasTexture(glowCanvas);
+            textures.push(glowTexture);
+            const corona = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture, transparent: true, opacity: .95, blending: THREE.AdditiveBlending, depthWrite: false }));
+            corona.scale.set(92, 92, 1);
+            sunGroup.add(corona);
+
+            const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture, transparent: true, opacity: .22, blending: THREE.AdditiveBlending, depthWrite: false }));
+            halo.scale.set(150, 150, 1);
+            sunGroup.add(halo);
+
+            const pointLight = new THREE.PointLight(0xfff0d6, 3.1, 0, 0);
+            sunGroup.add(pointLight);
+
+            const planets = [];
+            const planetData = [
+                { name: 'mercury', radius: 1.3, dist: 22, speed: 0.048, color: 0x9e9e9e, tilt: 0.03 },
+                { name: 'venus', radius: 2.4, dist: 30, speed: 0.035, color: 0xffb300, tilt: 0.177 },
+                { name: 'earth', radius: 3.2, dist: 40, speed: 0.029, color: 0x2196f3, tilt: 0.409 },
+                { name: 'mars', radius: 1.9, dist: 50, speed: 0.024, color: 0xff5722, tilt: 0.44 },
+                { name: 'jupiter', radius: 7, dist: 72, speed: 0.013, color: 0xff9800, tilt: 0.054 },
+                { name: 'saturn', radius: 5.6, dist: 94, speed: 0.0095, color: 0xffca28, tilt: 0.466, ring: true },
+                { name: 'uranus', radius: 3, dist: 114, speed: 0.0068, color: 0x00bcd4, tilt: 1.708 },
+                { name: 'neptune', radius: 2.9, dist: 132, speed: 0.0054, color: 0x3f51b5, tilt: 0.494 }
+            ];
+
+            const phases = [2.4, 4.1, .6, 3.3, 2.7, -.55, 4.3, .2];
+            planetData.forEach((p, index) => {
+                const orbitGeo = new THREE.RingGeometry(p.dist - 0.045, p.dist + 0.045, 160);
+                const orbitMat = new THREE.MeshBasicMaterial({ color: 0x7ea7d8, side: THREE.DoubleSide, transparent: true, opacity: 0.09 });
+                const orbit = new THREE.Mesh(orbitGeo, orbitMat);
+                orbit.rotation.x = Math.PI / 2;
+                scene.add(orbit);
+
+                const group = new THREE.Group();
+                scene.add(group);
+
+                const planetGeo = new THREE.SphereGeometry(p.radius, 64, 64);
+                const planetMat = new THREE.MeshStandardMaterial({ color: p.color, roughness: 0.95, metalness: 0 });
+                surface(p.name === 'earth' ? 'earth_daymap' : p.name === 'venus' ? 'venus_atmosphere' : p.name, planetMat);
+                const planet = new THREE.Mesh(planetGeo, planetMat);
+                planet.rotation.z = p.tilt;
+                planet.position.x = p.dist;
+                group.add(planet);
+
+                if (p.ring) {
+                    const ringGeo = new THREE.RingGeometry(p.radius * 1.3, p.radius * 2.4, 128, 1);
+                    const uv = ringGeo.attributes.uv;
+                    const pos = ringGeo.attributes.position;
+                    for (let j = 0; j < pos.count; j++) {
+                        uv.setXY(j, (Math.hypot(pos.getX(j), pos.getY(j)) / p.radius - 1.3) / 1.1, .5);
+                    }
+                    const ringCanvas = document.createElement('canvas');
+                    ringCanvas.width = 256; ringCanvas.height = 1;
+                    const rc = ringCanvas.getContext('2d');
+                    for (let j = 0; j < 256; j++) {
+                        const gap = j > 169 && j < 181;
+                        const shade = 150 + 35 * Math.sin(j * 1.7) + 22 * Math.sin(j * .13);
+                        rc.fillStyle = 'rgba(' + shade + ',' + (shade * .91) + ',' + (shade * .74) + ',' + (gap ? .05 : .85) + ')';
+                        rc.fillRect(j, 0, 1, 1);
+                    }
+                    const ringTexture = new THREE.CanvasTexture(ringCanvas);
+                    ringTexture.colorSpace = THREE.SRGBColorSpace;
+                    textures.push(ringTexture);
+                    const ringMat = new THREE.MeshStandardMaterial({ map: ringTexture, side: THREE.DoubleSide, transparent: true, roughness: 1, depthWrite: false });
+                    const ring = new THREE.Mesh(ringGeo, ringMat);
+                    ring.rotation.x = Math.PI / 2;
+                    planet.add(ring);
+                }
+
+                let label;
+                if (['earth', 'jupiter', 'saturn'].includes(p.name)) {
+                    label = document.createElement('span');
+                    label.className = 'intro-planet-label';
+                    label.textContent = { earth: 'TIERRA', jupiter: 'JÚPITER', saturn: 'SATURNO' }[p.name];
+                    intro.appendChild(label);
+                }
+                planets.push({ group, planet, speed: p.speed, angle: phases[index], label });
+            });
+
+            const hemi = new THREE.AmbientLight(0x99b4d7, 0.15);
+            scene.add(hemi);
+
+            let time = 0, previous = 0, raf = 0, stopped = false;
+            const projected = new THREE.Vector3();
+            function animate(now) {
+                if (stopped) return;
+                const dt = previous ? Math.min((now - previous) / 1000, .05) : 0;
+                previous = now;
+                time += dt;
+                sun.rotation.y += dt * .018;
+                corona.material.opacity = 0.88 + Math.sin(time * 0.45) * 0.05;
+                halo.material.opacity = 0.18 + Math.sin(time * 0.32) * 0.03;
+                stars.rotation.y += dt * 0.0015;
+                dust.rotation.y -= dt * 0.0008;
+                const introProgress = Math.min(time / 6, 1);
+                const ease = 1 - Math.pow(1 - introProgress, 3);
+                const distance = cameraDistance() * (1.08 - .08 * ease);
+                camera.position.set(Math.sin(time * .045) * distance * .1, distance * .5 + Math.sin(time * .07) * 3, distance * .84);
+                camera.lookAt(0, -2, 0);
+                planets.forEach(p => {
+                    p.angle += p.speed * dt * 0.85;
+                    p.group.rotation.y = p.angle;
+                    p.planet.rotation.y += dt * .11;
+                    if (p.label) {
+                        p.planet.getWorldPosition(projected).project(camera);
+                        const x = (projected.x * .5 + .5) * innerWidth + 14;
+                        const y = (-.5 * projected.y + .5) * innerHeight - 14;
+                        const visible = projected.z < 1 && x > 0 && x < innerWidth - 60 && y > 0 && y < innerHeight - 20;
+                        p.label.style.opacity = visible ? '1' : '0';
+                        p.label.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+                    }
+                });
+                composer.render();
+                raf = requestAnimationFrame(animate);
+            }
+            canvas.classList.add('ready');
+            raf = requestAnimationFrame(animate);
+
+            const resize = () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                composer.setSize(window.innerWidth, window.innerHeight);
+            };
+            window.addEventListener('resize', resize);
+            let exitTimer;
+            Promise.allSettled(textureJobs).then(() => {
+                if (!stopped) exitTimer = setTimeout(window.closeSolarIntro, 6500);
+            });
+            intro.addEventListener('solar-close', () => {
+                stopped = true;
+                clearTimeout(exitTimer);
+                cancelAnimationFrame(raf);
+                window.removeEventListener('resize', resize);
+                scene.traverse(object => {
+                    if (object.geometry) object.geometry.dispose();
+                    if (object.material) object.material.dispose();
+                });
+                textures.forEach(texture => texture.dispose());
+                composer.passes.forEach(pass => { if (pass.dispose) pass.dispose(); });
+                composer.dispose();
+                renderer.dispose();
+            }, { once: true });
+        })();
+    </script>
     <canvas id="fx-field" class="fx-field" aria-hidden="true"></canvas>
     <script>
         (function () {
@@ -2212,7 +2862,7 @@
             });
 
             /* ===== REVEAL ===== */
-            const targets = document.querySelectorAll('.sec-head');
+            const targets = document.querySelectorAll('.reveal');
             if ('IntersectionObserver' in window && !reduceMotion) {
                 const io = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -2578,7 +3228,7 @@ function makeParticles() {
 
             /* ===== Parallax de scroll ===== */
             const prlx = { els: [] };
-            document.querySelectorAll('.hero-title, .hero-rule, .hero-proof, .hero-strip-wrap, .gallery-hero h1, .gallery-hero p').forEach(el => {
+            document.querySelectorAll('.hero-title, .hero-rule, .hero-proof, .hero-strip-wrap').forEach(el => {
                 let k = 0.07;
                 if (el.classList.contains('hero-title')) k = 0.12;
                 else if (el.classList.contains('hero-rule')) k = 0.06;
